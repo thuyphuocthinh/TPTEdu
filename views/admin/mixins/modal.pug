@@ -1,0 +1,22 @@
+mixin modal(slug, id, name)
+    .modal.fade(
+        id=slug aria-labelledby='exampleModalLabel' 
+        aria-hidden='true' 
+        data-bs-backdrop="static" 
+        data-bs-keyboard="false"
+    )
+        .modal-dialog
+            .modal-content
+                .modal-header.alert.alert-danger
+                    h1.modal-title.fs-5 
+                        span.fa-solid.fa-circle-exclamation.me-3
+                        span Cảnh báo
+                    button.btn-close(type='button' data-bs-dismiss='modal' aria-label='Close')
+                .modal-body
+                    p Bạn có chắc muốn xóa khóa học này?
+                    p.fw-bold #{name}
+                .modal-footer
+                    button.btn.btn-secondary(type='button' data-bs-dismiss='modal') Hủy
+                    a(href=`${prefixAdmin}/courses/delete/${id}`).btn.btn-danger(type='button') Chắc chắn
+
+            

@@ -1,0 +1,5 @@
+mixin status(course)
+    if (course.status === "active")
+        a(href=`${prefixAdmin}/courses/updateStatus/${course.id}/inactive` class="badge bg-success") Active 
+    else 
+        a(href=`${prefixAdmin}/courses/updateStatus/${course.id}/active` class="badge bg-danger") Inactive 

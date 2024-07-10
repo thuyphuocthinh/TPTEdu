@@ -1,0 +1,12 @@
+mixin filterByStatus(options, defaultValue)
+    .d-flex.align-items-center.gap-4
+        each option in options 
+            .form-check.form-check-inline.mb-0
+                input.form-check-input(
+                    type='radio' 
+                    id=option.name 
+                    name="filter" 
+                    value=option.value
+                    checked=(option.value===defaultValue?true:false)
+                )
+                label.form-check-label(for=option.name) #{option.title}

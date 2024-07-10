@@ -1,0 +1,15 @@
+mixin image-upload(id) 
+    .form-group 
+        span(class="fw-bold") Ảnh *
+        label(for=id class="fw-bold image-upload-btn") 
+            .fa-solid.fa-plus.me-2 
+            span Tải ảnh lên
+        input(
+            type="file" 
+            id=id
+            name=id
+            style="display: none;" 
+            image-upload-input
+            accept="image/*"
+        ) 
+        p.error-msg

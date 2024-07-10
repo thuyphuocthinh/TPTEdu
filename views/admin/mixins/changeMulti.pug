@@ -1,0 +1,13 @@
+mixin changeMulti()
+    form(
+        action=`${prefixAdmin}/courses/changeMulti?_method=PATCH`
+        method="post"
+        form-change-multi 
+        class="d-flex align-items-center gap-2"
+    ) 
+        select.form-select(name="changeMulti")
+            option(selected='' disabled=true) -- Chọn tiêu chí cập nhật --
+            option(value='deleteAll') Xóa
+            option(value='changeStatus') Thay đổi trạng thái
+        button(type="submit" class="btn btn-secondary") Áp dụng
+        input(type="text" name="ids" class="form-control" style="width: 200px; display:none;")

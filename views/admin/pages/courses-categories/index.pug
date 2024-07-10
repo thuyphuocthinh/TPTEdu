@@ -1,0 +1,70 @@
+extends ../../layouts/defaultLayout.pug
+include ../../mixins/box-head.pug 
+include ../../mixins/alert.pug 
+include ../../mixins/status.pug 
+include ../../mixins/modal.pug 
+include ../../mixins/pagination.pug 
+include ../../mixins/search.pug 
+include ../../mixins/sort.pug 
+include ../../mixins/filterByStatus.pug 
+include ../../mixins/changeMulti.pug 
+
+block main 
+    .main 
+        +box-head(pageTitle)
+
+        +alertSuccess("3000")
+
+        .card.my-4
+            .card-header.fw-bold Tìm kiếm, sắp xếp, lọc theo trạng thái
+            .card-body.card-sort-search
+                +search(keyword)
+                +sort(sort, sortedBy)
+                +filterByStatus(filterOptions, filterByStatus)
+                
+        .card.my-4
+            .card-header.fw-bold Thêm, sửa, cập nhật
+            .card-body.card-crud
+                +changeMulti()
+                
+                a(href=`${prefixAdmin}/courses-categories/create` class="btn btn-secondary") 
+                    .fa-solid.fa-plus.me-2 
+                    span Thêm mới 
+
+        .card.my-4
+            .card-header.fw-bold Danh sách danh mục khóa học
+            .card-body
+                if (categories.length > 0) 
+                    table.table.table-hover
+                        thead
+                            tr.text-center
+                                th(scope='col')
+                                    input(type="checkbox" name="" checkbox-all class="form-check-input")
+                                th(scope='col') STT
+                                th(scope='col') Tên 
+                                th(scope='col') Danh mục cha 
+                                th(scope='col') Vị trí
+                                th(scope='col') Status 
+                                th(scope='col') Actions
+                        
+                        tbody
+                            each category in categories 
+                                tr.text-center.align-middle 
+                                    td 
+                                        input(type="checkbox" name="" checkbox-single=category.id class="form-check-input")
+                                    td #{category.index}
+                                    td.fw-bold #{category.title}
+                                    td Danh mục cha
+                                    td #{category.position}
+                                    td 
+                                       
+
+                    +pagination(pagination)
+                else 
+                    tr(col-span="8") Chưa có danh mục nào
+
+    script(src="/public/admin/js/search.js") 
+    script(src="/public/admin/js/pagination.js") 
+    script(src="/public/admin/js/sort.js") 
+    script(src="/public/admin/js/filterByStatus.js") 
+    script(src="/public/admin/js/changeMulti.js") 

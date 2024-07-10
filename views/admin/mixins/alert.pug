@@ -1,0 +1,23 @@
+mixin alertSuccess(time)
+    if (messages.success)
+        div(
+            class="alert alert-success"
+            show-alert
+            data-time=time
+            class="message info"
+        )
+            p #{messages.success}
+            button.d-block.ms-auto.alert-btn-close.btn.btn-secondary
+                .fa-solid.fa-xmark
+
+mixin alertError(time)
+    if(messages.error)
+        div(
+            class="alert alert-danger"
+            show-alert
+            data-time=time
+            class="message info"
+        )
+            p #{messages.error}
+            button.d-block.ms-auto.alert-btn-close.btn.btn-secondary
+                .fa-solid.fa-xmark

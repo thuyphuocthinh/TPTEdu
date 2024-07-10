@@ -1,0 +1,10 @@
+mixin search(keyword)
+    form(
+        class="d-flex"
+        role="search"
+        method="GET"
+        form-search
+    )
+        input.form-control.me-2(type='search' name="keyword" value=keyword placeholder='Tìm kiếm theo tên' aria-label='Search')
+        button.btn.btn-secondary(type='submit' btn-form-search) 
+            .fa-solid.fa-magnifying-glass
