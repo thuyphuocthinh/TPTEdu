@@ -1,6 +1,7 @@
 extends ../../layouts/defaultLayout.pug
 include ../../mixins/box-head.pug 
 include ../../mixins/alert.pug 
+include ../../mixins/tree.pug 
 
 block main 
     .main 
@@ -24,11 +25,11 @@ block main
             .row.my-3
                 .col-md-6.col-12  
                     .form-group     
-                        label(for="parent_category_id" class="fw-bold") Danh mục cha *
-                        select(name="parent_category_id" id="parent_category_id" class="form-select" value=category.parent_category_id)
-                            option(value="" disabled=true selected) -- Chọn danh mục --   
-                            option(value="") Danh mục 1   
-                            option(value="") Danh mục 2
+                        label(for="parent_category_id" class="fw-bold") Danh mục cha
+                        select(name="parent_category_id" id="parent_category_id" class="form-select")
+                            option(disabled=true selected) -- Chọn danh mục --   
+                            option(value="" selected=(category.parent_category_id==="")) Danh mục gốc
+                            +tree(categories, category.parent_category_id)
                         p.error-msg
         
 

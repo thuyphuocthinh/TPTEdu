@@ -1,7 +1,9 @@
 const { prefixAdmin } = require("../../config/system.config");
 const { pagination } = require("../../helpers/objectPagination");
 const Courses = require("../../models/courses.model");
+const CoursesCategories = require("../../models/courses_categories.model");
 const searchHelper = require("../../helpers/search");
+const { tree } = require("../../helpers/categoriesRecursion");
 
 const index = async (req, res) => {
   try {
@@ -109,6 +111,25 @@ const index = async (req, res) => {
       course.index = index + 1;
     });
 
+    for (let i = 0; i < courses.length; i++) {
+      const course = courses[i];
+      let categoryTitle = "";
+      if (course.course_category_id) {
+        const category = await CoursesCategories.findOne({
+          _id: course.course_category_id,
+          deleted: false,
+        });
+        categoryTitle = category.title;
+      }
+      course.index = i + 1;
+      course.category = categoryTitle;
+    }
+
+    // get categories
+    const categories = await CoursesCategories.find({ deleted: false });
+    // categories recursion
+    const treeCategories = tree(categories);
+
     res.render("admin/pages/courses/index", {
       pageTitle: "Khóa học",
       courses,
@@ -118,6 +139,7 @@ const index = async (req, res) => {
       sortedBy,
       filterOptions,
       filterByStatus,
+      categories: treeCategories,
     });
   } catch (error) {
     console.log(error);
@@ -130,9 +152,15 @@ const getCreate = async (req, res) => {
       deleted: false,
     });
     const position = courses.length + 1;
+    // get categories
+    const categories = await CoursesCategories.find({ deleted: false });
+    // categories recursion
+    const treeCategories = tree(categories);
+
     res.render("admin/pages/courses/create", {
       pageTitle: "Thêm khóa học mới",
       position,
+      categories: treeCategories,
     });
   } catch (error) {
     console.log(error);
@@ -141,9 +169,9 @@ const getCreate = async (req, res) => {
 
 const postCreate = async (req, res) => {
   try {
-    if (req.body.position) {
-      req.body.position = parseInt(req.body.position);
-    }
+    req.body.position = parseInt(req.body.position);
+    req.body.price = parseInt(req.body.price);
+    req.body.discountPercentage = parseInt(req.body.discountPercentage);
     const course = new Courses(req.body);
     await course.save();
     req.flash("success", "Tạo khóa học mới thành công!");
@@ -194,9 +222,14 @@ const getEdit = async (req, res) => {
     const course = await Courses.findOne({
       _id: id,
     });
+    // get categories
+    const categories = await CoursesCategories.find({ deleted: false });
+    // categories recursion
+    const treeCategories = tree(categories);
     res.render("admin/pages/courses/edit", {
       pageTitle: "Chỉnh sửa khóa học",
       course,
+      categories: treeCategories,
     });
   } catch (error) {}
 };
@@ -252,7 +285,7 @@ const changeMulti = async (req, res) => {
   try {
     const changeType = req.body.changeMulti;
     const ids = req.body.ids.split(",");
-    
+
     switch (changeType) {
       case "deleteAll": {
         ids.forEach(async (id) => {
@@ -287,7 +320,6 @@ const changeMulti = async (req, res) => {
     }
     req.flash("success", "Cập nhật thành công");
     res.redirect("back");
-    
   } catch (error) {
     console.log(error);
   }

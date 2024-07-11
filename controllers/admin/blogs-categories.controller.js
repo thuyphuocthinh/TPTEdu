@@ -1,5 +1,5 @@
+const BlogsCategories = require("../../models/blogs-categories.model");
 const { prefixAdmin } = require("../../config/system.config");
-const CoursesCategories = require("../../models/courses_categories.model");
 const { pagination } = require("../../helpers/objectPagination");
 const searchHelper = require("../../helpers/search");
 const { tree } = require("../../helpers/categoriesRecursion");
@@ -13,11 +13,11 @@ const index = async (req, res) => {
     let sort = [
       {
         keyValue: "title-desc",
-        title: "Sắp xếp tên danh mục khóa học giảm dần",
+        title: "Sắp xếp tên danh mục bài viết giảm dần",
       },
       {
         keyValue: "title-asc",
-        title: "Sắp xếp tên danh mục khóa học tăng dần",
+        title: "Sắp xếp tên danh mục bài viết tăng dần",
       },
       {
         keyValue: "position-desc",
@@ -82,12 +82,12 @@ const index = async (req, res) => {
       currentPage: page || 1,
       skip: 0,
     };
-    const totalItems = await CoursesCategories.countDocuments({
+    const totalItems = await BlogsCategories.countDocuments({
       deleted: false,
     });
     objectPagination = pagination(objectPagination, totalItems);
 
-    const categories = await CoursesCategories.find(find)
+    const categories = await BlogsCategories.find(find)
       .limit(objectPagination.limitItem)
       .skip(objectPagination.skip)
       .sort(sortObj);
@@ -96,7 +96,7 @@ const index = async (req, res) => {
       const category = categories[i];
       let parentCategoryTitle = "";
       if (category.parent_category_id) {
-        const parentCategory = await CoursesCategories.findOne({
+        const parentCategory = await BlogsCategories.findOne({
           _id: category.parent_category_id,
           deleted: false,
         }).select("title");
@@ -106,7 +106,7 @@ const index = async (req, res) => {
       category.parentCategoryTitle = parentCategoryTitle;
     }
 
-    res.render("admin/pages/courses-categories/index", {
+    res.render("admin/pages/blogs-categories/index", {
       pageTitle: "Danh mục khóa học",
       categories,
       pagination: objectPagination,
@@ -124,13 +124,13 @@ const index = async (req, res) => {
 const getCreate = async (req, res) => {
   try {
     const position =
-      (await CoursesCategories.countDocuments({ deleted: false })) + 1;
+      (await BlogsCategories.countDocuments({ deleted: false })) + 1;
     // get categories
-    const categories = await CoursesCategories.find({ deleted: false });
+    const categories = await BlogsCategories.find({ deleted: false });
     // categories recursion
     const treeCategories = tree(categories);
-    res.render("admin/pages/courses-categories/create", {
-      pageTitle: "Tạo danh mục khóa học mới",
+    res.render("admin/pages/blogs-categories/create", {
+      pageTitle: "Thêm danh mục bài viết",
       position,
       categories: treeCategories,
     });
@@ -142,28 +142,26 @@ const getCreate = async (req, res) => {
 const postCreate = async (req, res) => {
   try {
     req.body.position = parseInt(req.body.position);
-    const category = new CoursesCategories(req.body);
+    const category = new BlogsCategories(req.body);
     await category.save();
-    req.flash("success", "Thêm danh mục khóa học mới thành công");
-    res.redirect(`${prefixAdmin}/courses-categories`);
+    req.flash("success", "Thêm danh mục bài viết mới thành công");
+    res.redirect(`${prefixAdmin}/blogs-categories`);
   } catch (error) {
     console.log(error);
+    req.flash("error", "Thêm danh mục bài viết mới thất bại");
   }
 };
 
 const getEdit = async (req, res) => {
   try {
     const id = req.params.id;
-    const category = await CoursesCategories.findOne({
-      _id: id,
-      deleted: false,
-    });
+    const category = await BlogsCategories.findOne({ _id: id, deleted: false });
     // get categories
-    const categories = await CoursesCategories.find({ deleted: false });
+    const categories = await BlogsCategories.find({ deleted: false });
     // categories recursion
     const treeCategories = tree(categories);
-    res.render("admin/pages/courses-categories/edit", {
-      pageTitle: "Chỉnh sửa danh mục khóa học",
+    res.render("admin/pages/blogs-categories/edit", {
+      pageTitle: "Chính sửa danh mục bài viết",
       category,
       categories: treeCategories,
     });
@@ -176,16 +174,17 @@ const patchEdit = async (req, res) => {
   try {
     const id = req.params.id;
     req.body.position = parseInt(req.body.position);
-    await CoursesCategories.updateOne(
+    await BlogsCategories.updateOne(
       {
         _id: id,
       },
       req.body
     );
     req.flash("success", "Cập nhật thành công");
-    res.redirect(`${prefixAdmin}/courses-categories`);
+    res.redirect(`${prefixAdmin}/blogs-categories`);
   } catch (error) {
     console.log(error);
+    req.flash("error", "Cập nhật thất bại");
   }
 };
 
@@ -193,7 +192,7 @@ const updateStatus = async (req, res) => {
   try {
     const id = req.params.id;
     const status = req.params.status;
-    await CoursesCategories.updateOne(
+    await BlogsCategories.updateOne(
       {
         _id: id,
       },
@@ -205,6 +204,7 @@ const updateStatus = async (req, res) => {
     res.redirect("back");
   } catch (error) {
     console.log(error);
+    req.flash("error", "Cập nhật trạng thái thất bại");
   }
 };
 
@@ -216,7 +216,7 @@ const changeMulti = async (req, res) => {
     switch (changeType) {
       case "deleteAll": {
         ids.forEach(async (id) => {
-          await CoursesCategories.updateOne(
+          await BlogsCategories.updateOne(
             {
               _id: id,
             },
@@ -229,12 +229,12 @@ const changeMulti = async (req, res) => {
       }
       case "changeStatus": {
         ids.forEach(async (id) => {
-          const item = await CoursesCategories.findOne({
+          const item = await BlogsCategories.findOne({
             _id: id,
             deleted: false,
           });
           const statusChange = item.status === "active" ? "inactive" : "active";
-          await CoursesCategories.updateOne(
+          await BlogsCategories.updateOne(
             {
               _id: id,
             },
@@ -259,7 +259,7 @@ const changeMulti = async (req, res) => {
 const deleteItem = async (req, res) => {
   try {
     const id = req.params.id;
-    await CoursesCategories.updateOne(
+    await BlogsCategories.updateOne(
       {
         _id: id,
       },

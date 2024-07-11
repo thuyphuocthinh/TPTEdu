@@ -1,5 +1,6 @@
 extends ../../layouts/defaultLayout.pug
 include ../../mixins/box-head.pug 
+include ../../mixins/image-upload.pug 
 include ../../mixins/alert.pug 
 include ../../mixins/tree.pug 
 
@@ -11,9 +12,10 @@ block main
         +alertSuccess(3000)
 
         form(
-            action=`${prefixAdmin}/courses-categories/create`
+            action=`${prefixAdmin}/blogs/create`
             method="POST"
-            id="form-course-category-create"
+            enctype="multipart/form-data"
+            id="form-create-blog"
         )
             .row.my-3
                 .col-md-6.col-12 
@@ -22,24 +24,36 @@ block main
                         input(type="text" name="title" id="title" class="form-control") 
                         p.error-msg
 
-            .row.my-3
                 .col-md-6.col-12  
                     .form-group     
-                        label(for="parent_category_id" class="fw-bold") Danh mục cha*
-                        select(name="parent_category_id" id="parent_category_id" class="form-select")
-                            option(value="" disabled=true selected) -- Chọn danh mục --
-                            option(value="") Danh mục gốc   
-                            +tree(categories)
+                        label(for="blog_category_id" class="fw-bold") Danh mục *
+                        select(name="blog_category_id" id="blog_category_id" class="form-select")
+                            option(value="" disabled=true selected) -- Chọn danh mục --   
+                            option(value="") Danh mục gốc
+                            +treeForCourse(categories)
                         p.error-msg
-        
+            
+            .row.my-3 
+                .col-md-2.col-12
+                    +image-upload("thumbnail")
+                .col-md-10.col-12
+                    .preview-image
+
+            .row.my-3  
+                .col-12
+                    .form-group 
+                        label(class="fw-bold") Nội dung *
+                        textarea(name="content" id="content" class="textarea-mce")
+                        p.error-msg
+
             .row.my-3
-                .col-md-3.col-12.mb-md-0
+                .col-md-4.col-12.mb-md-0.mb-3 
                     .form-group 
                         label(for="position" class="fw-bold") Vị trí
                         input(type="number" id="position" value=position name="position" min="0" class="form-control")    
 
-            .row.my-3
-                .col-md-9.col-12.d-flex.align-items-center.gap-4
+            .row.my-3 
+                .col-md-8.col-12.d-flex.align-items-center.gap-4
                     span(class="fw-bold p-0 m-0") Trạng thái hoạt động
                     .form-check.form-check-inline.mb-0
                         input.form-check-input(type='radio' id="active" name='status' value='active' checked)
@@ -51,6 +65,7 @@ block main
             .my-3 
                 button(type="submit" class="btn btn-secondary" btn-create) Tạo mới
 
+    script(src="/public/admin/js/upload-image.js") 
     script(src="/public/admin/js/validator.js") 
 
 

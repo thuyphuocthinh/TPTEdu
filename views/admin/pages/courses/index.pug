@@ -8,6 +8,7 @@ include ../../mixins/search.pug
 include ../../mixins/sort.pug 
 include ../../mixins/filterByStatus.pug 
 include ../../mixins/changeMulti.pug 
+include ../../mixins/tree.pug 
 
 block main 
     .main 
@@ -25,7 +26,7 @@ block main
         .card.my-4
             .card-header.fw-bold Thêm, sửa, cập nhật
             .card-body.card-crud
-                +changeMulti()
+                +changeMulti("courses")
                 
                 a(href=`${prefixAdmin}/courses/create` class="btn btn-secondary") 
                     .fa-solid.fa-plus.me-2 
@@ -43,6 +44,7 @@ block main
                                 th(scope='col') STT
                                 th(scope='col') Tên 
                                 th(scope='col') Hình ảnh
+                                th(scope='col') Danh mục
                                 th(scope='col') Giá
                                 th(scope='col') Vị trí
                                 th(scope='col') Giảm giá 
@@ -58,16 +60,21 @@ block main
                                     td.fw-bold #{course.title}
                                     td 
                                         img(src=course.thumbnail alt=course.title style="width: 75px; height: 75px;")
+                                    td 
+                                        if(course.course_category_id)
+                                            span #{course.category}
+                                        else 
+                                            span Danh mục gốc
                                     td #{course.price} $
                                     td #{course.position}
                                     td #{course.discountPercentage} %
                                     td 
-                                        +status(course)
+                                        +status(course, "courses")
                                     td 
                                         a(href=`${prefixAdmin}/courses/detail/${course.id}` class="btn btn-primary me-2") Chi tiết 
                                         a(href=`${prefixAdmin}/courses/edit/${course.id}` class="btn btn-warning me-2") Sửa 
                                         button(type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target=`#${course.slug}`) Xóa
-                                        +modal(course.slug, course.id, course.title)
+                                        +modal(course.slug, course.id, course.title, "khóa học", "courses")
            
                     +pagination(pagination)
                 else 

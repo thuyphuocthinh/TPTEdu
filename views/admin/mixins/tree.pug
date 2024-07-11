@@ -1,0 +1,23 @@
+mixin tree(categories, parent_id = "", level = 0)
+    each item in categories 
+        - const prefix = Array(level + 1).join("-- ")
+        option(
+            value=item.id
+            selected=(item.id === parent_id)
+        ) #{prefix}#{item.title}
+        if (item.children && item.children.length > 0)
+            +tree(item.children, parent_id, level + 1)
+
+mixin treeForCourse(categories, course_category_id, level = 0)
+    each item in categories 
+            - const prefix = Array(level + 1).join("-- ")
+            option(
+                value=item.id
+                selected=(item.id === course_category_id)
+            ) #{prefix}#{item.title}
+            if (item.children && item.children.length > 0)
+                +tree(item.children, course_category_id, level + 1)
+
+//- [
+        laptrinh: {children: []}, kinhdoanh, tinhoccoban, kinangmem 
+    ]

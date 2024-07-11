@@ -1,0 +1,37 @@
+extends ../../layouts/defaultLayout.pug
+include ../../mixins/box-head.pug 
+
+block main 
+    .main 
+        +box-head(pageTitle)
+
+        .row.mt-3 
+            .col-md-3.col-12 
+                img(src=blog.thumbnail, alt=blog.title, style="width: 100%; height: auto;", class="img-thumbnail")
+
+            .col-md-9.col-12 
+                table.table.table-hover.table-bordered.border-secondary
+                    tbody
+                        tr.text-center.align-middle 
+                            th Tên
+                            td #{blog.title}
+                        tr.text-center.align-middle 
+                            th Vị trí
+                            td #{blog.position}
+
+                        tr.text-center.align-middle 
+                            th Nội dung
+                            td !{blog.content}
+                        
+                        tr.text-center.align-middle 
+                            th Trạng thái
+                            td
+                                if (blog.status === "active")
+                                    span(class="badge bg-success") active 
+                                else 
+                                    span(class="badge bg-danger") inactive
+                                    
+                        tr.text-center.align-middle 
+                            th Actions
+                            td 
+                                a(href=`${prefixAdmin}/blogs/edit/${blog.id}` class="btn btn-primary me-2") Chỉnh sửa 

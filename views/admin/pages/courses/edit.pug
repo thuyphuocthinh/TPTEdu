@@ -2,6 +2,7 @@ extends ../../layouts/defaultLayout.pug
 include ../../mixins/box-head.pug 
 include ../../mixins/image-upload.pug 
 include ../../mixins/alert.pug 
+include ../../mixins/tree.pug 
 
 block main 
     .main 
@@ -28,8 +29,8 @@ block main
                         label(for="course_category_id" class="fw-bold") Danh mục *
                         select(name="course_category_id" id="course_category_id" class="form-select")
                             option(value="" disabled=true selected) -- Chọn danh mục --   
-                            option(value="") Danh mục 1   
-                            option(value="") Danh mục 2
+                            option(value="") Danh mục gốc
+                            +treeForCourse(categories, course.course_category_id)
                         p.error-msg
             
             .row.my-3 

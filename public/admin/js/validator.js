@@ -20,7 +20,13 @@ function Validator(options) {
         }
         errorMsg = isSelected ? undefined : "Vui lòng chọn 1 lựa chọn nào đó!";
       } else if (inputElement.tagName === "TEXTAREA") {
-        var editorContent = tinyMCE.get("description").getContent();
+        const id = inputElement.id;
+        var editorContent;
+        if (tinyMCE.get(id)) {
+          editorContent = tinyMCE.get(id).getContent();
+        } else {
+          editorContent = inputElement.value;
+        }
         errorMsg = rules[i](editorContent);
       } else {
         switch (inputElement.type) {
@@ -199,16 +205,42 @@ Validator({
   ],
 });
 
-/* 
-    Khong duoc hardcode
-    Logic hoạt động
-    - Bên sử dụng: truyền vào options{form, rules, onSubmit}
-    - Bên xử lí:
-    + Định nghĩa Máy kiểm tra (Validator)
-        - Định nghĩa chức năng kiểm tra (Validate)
-        - Duyệt qua các rules => lấy dữ liệu từ input => đưa vào hàm Validate kiểm tra => trả ra kết quả
-        - Nếu có chức năng submit => kiểm tra form đã valid chưa => nếu valid thì gửi dữ liệu lấy từ input về 
-        cho bên sử dụng => nếu chưa thì yêu cầu nhập lại
-        - Định nghĩa các rules
-        - Định nghĩa tìm parent element nhiều cấp => không phải form nào cũng có thể được .form-msg từ .form-control dễ dàng
-*/
+Validator({
+  form: "#form-create-blog",
+  rules: [
+    Validator.isRequired("#title"),
+    Validator.isRequired("#thumbnail"),
+    Validator.isRequired("#blog_category_id"),
+    Validator.isRequired("#content"),
+  ],
+});
+
+Validator({
+  form: "#form-edit-blog",
+  rules: [
+    Validator.isRequired("#title"),
+    Validator.isRequired("#blog_category_id"),
+    Validator.isRequired("#content"),
+  ],
+});
+
+Validator({
+  form: "#form-blog-category-create",
+  rules: [
+    Validator.isRequired("#title"),
+    Validator.isRequired("#parent_category_id"),
+  ],
+});
+
+Validator({
+  form: "#form-blog-category-edit",
+  rules: [
+    Validator.isRequired("#title"),
+    Validator.isRequired("#parent_category_id"),
+  ],
+});
+
+Validator({
+  form: "#form-create-role",
+  rules: [Validator.isRequired("#title"), Validator.isRequired("#description")],
+});

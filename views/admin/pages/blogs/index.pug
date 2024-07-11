@@ -8,13 +8,13 @@ include ../../mixins/search.pug
 include ../../mixins/sort.pug 
 include ../../mixins/filterByStatus.pug 
 include ../../mixins/changeMulti.pug 
+include ../../mixins/tree.pug 
 
 block main 
     .main 
         +box-head(pageTitle)
 
         +alertSuccess("3000")
-        +alertError("3000")
 
         .card.my-4
             .card-header.fw-bold Tìm kiếm, sắp xếp, lọc theo trạng thái
@@ -26,16 +26,16 @@ block main
         .card.my-4
             .card-header.fw-bold Thêm, sửa, cập nhật
             .card-body.card-crud
-                +changeMulti("courses-categories")
+                +changeMulti("blogs")
                 
-                a(href=`${prefixAdmin}/courses-categories/create` class="btn btn-secondary") 
+                a(href=`${prefixAdmin}/blogs/create` class="btn btn-secondary") 
                     .fa-solid.fa-plus.me-2 
                     span Thêm mới 
 
         .card.my-4
-            .card-header.fw-bold Danh sách danh mục khóa học
+            .card-header.fw-bold Danh sách bài viết
             .card-body
-                if (categories.length > 0) 
+                if (blogs.length > 0) 
                     table.table.table-hover
                         thead
                             tr.text-center
@@ -43,38 +43,38 @@ block main
                                     input(type="checkbox" name="" checkbox-all class="form-check-input")
                                 th(scope='col') STT
                                 th(scope='col') Tên 
-                                th(scope='col') Danh mục cha 
+                                th(scope='col') Hình ảnh
+                                th(scope='col') Danh mục
                                 th(scope='col') Vị trí
                                 th(scope='col') Status 
                                 th(scope='col') Actions
                         
                         tbody
-                            each category in categories 
+                            each blog in blogs 
                                 tr.text-center.align-middle 
                                     td 
-                                        input(type="checkbox" name="" checkbox-single=category.id class="form-check-input")
-                                    td #{category.index}
-                                    td.fw-bold #{category.title}
+                                        input(type="checkbox" name="" checkbox-single=blog.id class="form-check-input")    
+                                    td #{blog.index}
+                                    td.fw-bold #{blog.title}
                                     td 
-                                        if (category.parent_category_id) 
-                                            span #{category.parentCategoryTitle}
+                                        img(src=blog.thumbnail alt=blog.title style="width: 75px; height: 75px;")
+                                    td 
+                                        if(blog.blog_category_id)
+                                            span #{blog.category}
                                         else 
                                             span Danh mục gốc
-                                    td #{category.position}
-                                    td
-                                        if (category.status === "active")
-                                            a(href=`${prefixAdmin}/courses-categories/updateStatus/${category.id}/inactive` class="badge bg-success") active  
-                                        else 
-                                            a(href=`${prefixAdmin}/courses-categories/updateStatus/${category.id}/active` class="badge bg-danger") inactive
+                                    td #{blog.position}
                                     td 
-                                        a(href=`${prefixAdmin}/courses-categories/edit/${category.id}` class="btn btn-warning me-2") Sửa 
-                                        button(type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target=`#${category.slug}`) Xóa
-                                        +modal(category.slug, category.id, category.title, "danh mục", "courses-categories")  
-                                    
-
+                                        +status(blog, "blogs")
+                                    td 
+                                        a(href=`${prefixAdmin}/blogs/detail/${blog.id}` class="btn btn-primary me-2") Chi tiết 
+                                        a(href=`${prefixAdmin}/blogs/edit/${blog.id}` class="btn btn-warning me-2") Sửa 
+                                        button(type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target=`#${blog.slug}`) Xóa
+                                        +modal(blog.slug, blog.id, blog.title, "bài viết", "blogs")
+           
                     +pagination(pagination)
                 else 
-                    tr(col-span="8") Chưa có danh mục nào
+                    tr(col-span="8") Chưa có bài viết nào
 
     script(src="/public/admin/js/search.js") 
     script(src="/public/admin/js/pagination.js") 

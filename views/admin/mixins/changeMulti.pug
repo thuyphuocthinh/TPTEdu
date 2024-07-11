@@ -1,6 +1,6 @@
-mixin changeMulti()
+mixin changeMulti(route)
     form(
-        action=`${prefixAdmin}/courses/changeMulti?_method=PATCH`
+        action=`${prefixAdmin}/${route}/changeMulti?_method=PATCH`
         method="post"
         form-change-multi 
         class="d-flex align-items-center gap-2"

@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const controller = require("../../controllers/admin/courses-categories.controller");
+const controller = require("../../controllers/admin/accounts.controller");
 
 router.get("/", controller.index);
 router.get("/create", controller.getCreate);
@@ -10,6 +10,5 @@ router.patch("/edit/:id", controller.patchEdit);
 router.get("/updateStatus/:id/:status", controller.updateStatus);
 router.get("/delete/:id", controller.deleteItem);
 router.patch("/changeMulti", controller.changeMulti);
-
 
 module.exports = router;

@@ -26,14 +26,14 @@ block main
         .card.my-4
             .card-header.fw-bold Thêm, sửa, cập nhật
             .card-body.card-crud
-                +changeMulti("courses-categories")
+                +changeMulti("blogs-categories")
                 
-                a(href=`${prefixAdmin}/courses-categories/create` class="btn btn-secondary") 
+                a(href=`${prefixAdmin}/blogs-categories/create` class="btn btn-secondary") 
                     .fa-solid.fa-plus.me-2 
                     span Thêm mới 
 
         .card.my-4
-            .card-header.fw-bold Danh sách danh mục khóa học
+            .card-header.fw-bold Danh sách danh mục bài viết
             .card-body
                 if (categories.length > 0) 
                     table.table.table-hover
@@ -63,13 +63,13 @@ block main
                                     td #{category.position}
                                     td
                                         if (category.status === "active")
-                                            a(href=`${prefixAdmin}/courses-categories/updateStatus/${category.id}/inactive` class="badge bg-success") active  
+                                            a(href=`${prefixAdmin}/blogs-categories/updateStatus/${category.id}/inactive` class="badge bg-success") active  
                                         else 
-                                            a(href=`${prefixAdmin}/courses-categories/updateStatus/${category.id}/active` class="badge bg-danger") inactive
+                                            a(href=`${prefixAdmin}/blogs-categories/updateStatus/${category.id}/active` class="badge bg-danger") inactive
                                     td 
-                                        a(href=`${prefixAdmin}/courses-categories/edit/${category.id}` class="btn btn-warning me-2") Sửa 
+                                        a(href=`${prefixAdmin}/blogs-categories/edit/${category.id}` class="btn btn-warning me-2") Sửa 
                                         button(type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target=`#${category.slug}`) Xóa
-                                        +modal(category.slug, category.id, category.title, "danh mục", "courses-categories")  
+                                        +modal(category.slug, category.id, category.title, "danh mục", "blogs-categories")  
                                     
 
                     +pagination(pagination)
