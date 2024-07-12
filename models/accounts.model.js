@@ -7,12 +7,16 @@ const accountsSchema = new mongoose.Schema(
   {
     email: String,
     password: String,
+    role_id: String,
     token: {
       type: String,
       default: generator.generateRandomString(30),
     },
     status: String,
-    position: Number,
+    slug: {
+      type: String,
+      slug: "email",
+    },
     deleted: {
       type: Boolean,
       default: false,

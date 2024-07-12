@@ -48,7 +48,7 @@ block main
                                     td 
                                         a(href=`${prefixAdmin}/roles/edit/${role.id}` class="btn btn-warning me-2") Sửa 
                                         button(type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target=`#${role.slug}`) Xóa
-                                        +modal(role.slug, role.id, role.title, "vai trò", "role")  
+                                        +modal(role.slug, role.id, role.title, "vai trò", "roles")  
                                     
 
                     +pagination(pagination)

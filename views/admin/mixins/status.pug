@@ -1,5 +1,5 @@
-mixin status(course, route)
-    if (course.status === "active")
-        a(href=`${prefixAdmin}/${route}/updateStatus/${course.id}/inactive` class="badge bg-success") Active 
+mixin status(item, route)
+    if (item.status === "active")
+        a(href=`${prefixAdmin}/${route}/updateStatus/${item.id}/inactive` class="badge bg-success") Active 
     else 
-        a(href=`${prefixAdmin}/${route}/updateStatus/${course.id}/active` class="badge bg-danger") Inactive 
+        a(href=`${prefixAdmin}/${route}/updateStatus/${item.id}/active` class="badge bg-danger") Inactive 
