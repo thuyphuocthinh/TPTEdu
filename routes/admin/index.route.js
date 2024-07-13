@@ -7,6 +7,7 @@ const accountsRoutes = require("../../routes/admin/accounts.route");
 const rolesRoutes = require("../../routes/admin/roles.route");
 const authRoutes = require("../../routes/admin/auth.route");
 const permissionsRoutes = require("../../routes/admin/permissions.route");
+const errorRoutes = require("../../routes/admin/error.route");
 // middlewares
 const authMiddleware = require("../../middlewares/admin/authMiddleware");
 
@@ -27,4 +28,5 @@ module.exports = (app) => {
   app.use(`${prefixAdmin}/roles`, authMiddleware, rolesRoutes);
   app.use(`${prefixAdmin}/permissions`, authMiddleware, permissionsRoutes);
   app.use(`${prefixAdmin}/auth`, authRoutes);
+  app.use(`${prefixAdmin}/errors`, errorRoutes);
 };

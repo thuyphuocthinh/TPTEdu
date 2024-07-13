@@ -5,7 +5,7 @@ include ../../mixins/tree.pug
 include ../../mixins/status.pug 
 
 block main 
-    if(role.permissions.includes("accounts-create"))
+    if(role.permissions.includes("accounts-add"))
         .main 
             +box-head(pageTitle)
             include ../../partials/require.pug

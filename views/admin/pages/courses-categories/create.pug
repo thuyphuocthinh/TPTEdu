@@ -4,7 +4,7 @@ include ../../mixins/alert.pug
 include ../../mixins/tree.pug 
 
 block main 
-    if(role.permissions.includes("courses-categories-create"))
+    if(role.permissions.includes("courses-categories-add"))
         .main 
             +box-head(pageTitle)
             include ../../partials/require.pug

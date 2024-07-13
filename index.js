@@ -28,7 +28,7 @@ app.use(session({ cookie: { maxAge: 60000 } }));
 app.use(flash());
 
 // method-override
-app.use(methodOverride('_method'))
+app.use(methodOverride("_method"));
 
 // body-parser
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -36,6 +36,9 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // routes
 adminRoute(app);
 clientsRoute(app);
+app.get("*", (req, res) => {
+  res.redirect(`${prefixAdmin}/errors/notFound`);
+});
 
 // view engine
 app.set("views", `${__dirname}/views`);
