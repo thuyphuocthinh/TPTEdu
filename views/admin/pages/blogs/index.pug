@@ -11,73 +11,79 @@ include ../../mixins/changeMulti.pug
 include ../../mixins/tree.pug 
 
 block main 
-    .main 
-        +box-head(pageTitle)
+    if(role.permissions.includes("blogs-view"))
+        .main 
+            +box-head(pageTitle)
 
-        +alertSuccess("3000")
+            +alertSuccess("3000")
 
-        .card.my-4
-            .card-header.fw-bold Tìm kiếm, sắp xếp, lọc theo trạng thái
-            .card-body.card-sort-search
-                +search(keyword)
-                +sort(sort, sortedBy)
-                +filterByStatus(filterOptions, filterByStatus)
-                
-        .card.my-4
-            .card-header.fw-bold Thêm, sửa, cập nhật
-            .card-body.card-crud
-                +changeMulti("blogs")
-                
-                a(href=`${prefixAdmin}/blogs/create` class="btn btn-secondary") 
-                    .fa-solid.fa-plus.me-2 
-                    span Thêm mới 
+            .card.my-4
+                .card-header.fw-bold Tìm kiếm, sắp xếp, lọc theo trạng thái
+                .card-body.card-sort-search
+                    +search(keyword)
+                    +sort(sort, sortedBy)
+                    +filterByStatus(filterOptions, filterByStatus)
+                    
+            .card.my-4
+                .card-header.fw-bold Thêm, sửa, cập nhật
+                .card-body.card-crud
+                    if(role.permissions.includes("blogs-edit"))
+                        +changeMulti("blogs")
+                    
+                    if(role.permissions.includes("blogs-add"))
+                        a(href=`${prefixAdmin}/blogs/create` class="btn btn-secondary") 
+                            .fa-solid.fa-plus.me-2 
+                            span Thêm mới 
 
-        .card.my-4
-            .card-header.fw-bold Danh sách bài viết
-            .card-body
-                if (blogs.length > 0) 
-                    table.table.table-hover
-                        thead
-                            tr.text-center
-                                th(scope='col')
-                                    input(type="checkbox" name="" checkbox-all class="form-check-input")
-                                th(scope='col') STT
-                                th(scope='col') Tên 
-                                th(scope='col') Hình ảnh
-                                th(scope='col') Danh mục
-                                th(scope='col') Vị trí
-                                th(scope='col') Status 
-                                th(scope='col') Actions
-                        
-                        tbody
-                            each blog in blogs 
-                                tr.text-center.align-middle 
-                                    td 
-                                        input(type="checkbox" name="" checkbox-single=blog.id class="form-check-input")    
-                                    td #{blog.index}
-                                    td.fw-bold #{blog.title}
-                                    td 
-                                        img(src=blog.thumbnail alt=blog.title style="width: 75px; height: 75px;")
-                                    td 
-                                        if(blog.blog_category_id)
-                                            span #{blog.category}
-                                        else 
-                                            span Danh mục gốc
-                                    td #{blog.position}
-                                    td 
-                                        +status(blog, "blogs")
-                                    td 
-                                        a(href=`${prefixAdmin}/blogs/detail/${blog.id}` class="btn btn-primary me-2") Chi tiết 
-                                        a(href=`${prefixAdmin}/blogs/edit/${blog.id}` class="btn btn-warning me-2") Sửa 
-                                        button(type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target=`#${blog.slug}`) Xóa
-                                        +modal(blog.slug, blog.id, blog.title, "bài viết", "blogs")
-           
-                    +pagination(pagination)
-                else 
-                    tr(col-span="8") Chưa có bài viết nào
+            .card.my-4
+                .card-header.fw-bold Danh sách bài viết
+                .card-body
+                    if (blogs.length > 0) 
+                        table.table.table-hover
+                            thead
+                                tr.text-center
+                                    th(scope='col')
+                                        input(type="checkbox" name="" checkbox-all class="form-check-input")
+                                    th(scope='col') STT
+                                    th(scope='col') Tên 
+                                    th(scope='col') Hình ảnh
+                                    th(scope='col') Danh mục
+                                    th(scope='col') Vị trí
+                                    th(scope='col') Status 
+                                    th(scope='col') Actions
+                            
+                            tbody
+                                each blog in blogs 
+                                    tr.text-center.align-middle 
+                                        td 
+                                            input(type="checkbox" name="" checkbox-single=blog.id class="form-check-input")    
+                                        td #{blog.index}
+                                        td.fw-bold #{blog.title}
+                                        td 
+                                            img(src=blog.thumbnail alt=blog.title style="width: 75px; height: 75px;")
+                                        td 
+                                            if(blog.blog_category_id)
+                                                span #{blog.category}
+                                            else 
+                                                span Danh mục gốc
+                                        td #{blog.position}
+                                        td 
+                                            +status(blog, "blogs")
+                                        td 
+                                            if(role.permissions.includes("blogs-view"))
+                                                a(href=`${prefixAdmin}/blogs/detail/${blog.id}` class="btn btn-primary me-2") Chi tiết 
+                                            if(role.permissions.includes("blogs-edit"))
+                                                a(href=`${prefixAdmin}/blogs/edit/${blog.id}` class="btn btn-warning me-2") Sửa 
+                                            if(role.permissions.includes("blogs-delete"))
+                                                button(type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target=`#${blog.slug}`) Xóa
+                                            +modal(blog.slug, blog.id, blog.title, "bài viết", "blogs")
+            
+                        +pagination(pagination)
+                    else 
+                        tr(col-span="8") Chưa có bài viết nào
 
-    script(src="/public/admin/js/search.js") 
-    script(src="/public/admin/js/pagination.js") 
-    script(src="/public/admin/js/sort.js") 
-    script(src="/public/admin/js/filterByStatus.js") 
-    script(src="/public/admin/js/changeMulti.js") 
+        script(src="/public/admin/js/search.js") 
+        script(src="/public/admin/js/pagination.js") 
+        script(src="/public/admin/js/sort.js") 
+        script(src="/public/admin/js/filterByStatus.js") 
+        script(src="/public/admin/js/changeMulti.js") 

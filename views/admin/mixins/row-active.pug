@@ -1,0 +1,16 @@
+mixin row-active(item)
+    tr.table-active
+        td(colspan=roles.length+1 class="text-center fw-bold") #{item}
+
+mixin row-function(name1, route, name2, role) 
+    tr.text-center(row-function) 
+        td.fw-bold #{name1}
+        each role in roles 
+            td(td-checkbox) 
+                input(
+                    type="checkbox" 
+                    data-index=role.index 
+                    name="permissions" 
+                    value=`${route}-${name2}` 
+                    class="form-check-input"
+                )

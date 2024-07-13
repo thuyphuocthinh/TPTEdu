@@ -4,84 +4,85 @@ include ../../mixins/image-upload.pug
 include ../../mixins/alert.pug 
 include ../../mixins/tree.pug 
 
-block main 
-    .main 
-        +box-head(pageTitle)
-        include ../../partials/require.pug
+block main
+    if(role.permissions.includes("courses-edit"))
+        .main 
+            +box-head(pageTitle)
+            include ../../partials/require.pug
 
-        +alertSuccess(3000)
+            +alertSuccess(3000)
 
-        form(
-            action=`${prefixAdmin}/courses/edit/${course.id}?_method=PATCH`
-            method="POST"
-            enctype="multipart/form-data"
-            id="form-edit"
-        )
-            .row.my-3
-                .col-md-6.col-12 
-                    .form-group     
-                        label(for="title" class="fw-bold") Tên *
-                        input(type="text" name="title" id="title" value=course.title class="form-control") 
-                        p.error-msg
+            form(
+                action=`${prefixAdmin}/courses/edit/${course.id}?_method=PATCH`
+                method="POST"
+                enctype="multipart/form-data"
+                id="form-edit"
+            )
+                .row.my-3
+                    .col-md-6.col-12 
+                        .form-group     
+                            label(for="title" class="fw-bold") Tên *
+                            input(type="text" name="title" id="title" value=course.title class="form-control") 
+                            p.error-msg
 
-                .col-md-6.col-12  
-                    .form-group     
-                        label(for="course_category_id" class="fw-bold") Danh mục *
-                        select(name="course_category_id" id="course_category_id" class="form-select")
-                            option(value="" disabled=true selected) -- Chọn danh mục --   
-                            option(value="") Danh mục gốc
-                            +treeForCourse(categories, course.course_category_id)
-                        p.error-msg
-            
-            .row.my-3 
-                .col-md-2.col-12
-                    +image-upload("thumbnail")
-                .col-md-10.col-12
-                    .preview-image
-                        img(src=course.thumbnail, alt=course.thumbnail, style="width: 200px; height: 200px;" class="img-thumbnail")
+                    .col-md-6.col-12  
+                        .form-group     
+                            label(for="course_category_id" class="fw-bold") Danh mục *
+                            select(name="course_category_id" id="course_category_id" class="form-select")
+                                option(value="" disabled=true selected) -- Chọn danh mục --   
+                                option(value="") Danh mục gốc
+                                +treeForCourse(categories, course.course_category_id)
+                            p.error-msg
+                
+                .row.my-3 
+                    .col-md-2.col-12
+                        +image-upload("thumbnail")
+                    .col-md-10.col-12
+                        .preview-image
+                            img(src=course.thumbnail, alt=course.thumbnail, style="width: 200px; height: 200px;" class="img-thumbnail")
 
-            .row.my-3  
-                .col-12
-                    .form-group 
-                        label(class="fw-bold") Mô tả *
-                        textarea(name="description" id="description" class="textarea-mce") #{course.description}
-                        p.error-msg
+                .row.my-3  
+                    .col-12
+                        .form-group 
+                            label(class="fw-bold") Mô tả *
+                            textarea(name="description" id="description" class="textarea-mce") #{course.description}
+                            p.error-msg
 
-            .row.my-3
-                .col-md-4.col-12.mb-md-0.mb-3 
-                    .form-group 
-                        label(for="position" class="fw-bold") Vị trí
-                        input(type="number" id="position" value=course.position name="position" min="0" class="form-control")    
-                .col-md-4.col-12 
-                    .form-group 
-                        label(for="price" class="fw-bold") Giá *
-                        .input-group
-                            input(type="number" id="price" value=course.price name="price" min="0" class="form-control")    
-                            span(class="input-group-text") $
-                        p.error-msg
-                .col-md-4.col-12 
-                    .form-group 
-                        label(for="discountPercentage" class="fw-bold") Giảm giá *
-                        .input-group
-                            input(type="number" id="discountPercentage" value=course.discountPercentage name="discountPercentage" min="0" class="form-control")
-                            span(class="input-group-text") %
-                        p.error-msg
+                .row.my-3
+                    .col-md-4.col-12.mb-md-0.mb-3 
+                        .form-group 
+                            label(for="position" class="fw-bold") Vị trí
+                            input(type="number" id="position" value=course.position name="position" min="0" class="form-control")    
+                    .col-md-4.col-12 
+                        .form-group 
+                            label(for="price" class="fw-bold") Giá *
+                            .input-group
+                                input(type="number" id="price" value=course.price name="price" min="0" class="form-control")    
+                                span(class="input-group-text") $
+                            p.error-msg
+                    .col-md-4.col-12 
+                        .form-group 
+                            label(for="discountPercentage" class="fw-bold") Giảm giá *
+                            .input-group
+                                input(type="number" id="discountPercentage" value=course.discountPercentage name="discountPercentage" min="0" class="form-control")
+                                span(class="input-group-text") %
+                            p.error-msg
 
-            .row.my-3 
-                .col-md-8.col-12.d-flex.align-items-center.gap-4
-                    span(class="fw-bold p-0 m-0") Trạng thái hoạt động
-                    .form-check.form-check-inline.mb-0
-                        input.form-check-input(type='radio' id="active" name='status' value='active' checked=(course.status==="active"?true:false))
-                        label.form-check-label(for='active') Hoạt động
-                    .form-check.form-check-inline.mb-0
-                        input.form-check-input(type='radio' id="inactive" name='status' value='inactive' checked=(course.status==="inactive"?true:false))
-                        label.form-check-label(for='inactive') Chưa hoạt động
+                .row.my-3 
+                    .col-md-8.col-12.d-flex.align-items-center.gap-4
+                        span(class="fw-bold p-0 m-0") Trạng thái hoạt động
+                        .form-check.form-check-inline.mb-0
+                            input.form-check-input(type='radio' id="active" name='status' value='active' checked=(course.status==="active"?true:false))
+                            label.form-check-label(for='active') Hoạt động
+                        .form-check.form-check-inline.mb-0
+                            input.form-check-input(type='radio' id="inactive" name='status' value='inactive' checked=(course.status==="inactive"?true:false))
+                            label.form-check-label(for='inactive') Chưa hoạt động
 
-            .my-3 
-                button(type="submit" class="btn btn-secondary" btn-create) Cập nhật
+                .my-3 
+                    button(type="submit" class="btn btn-secondary" btn-create) Cập nhật
 
-    script(src="/public/admin/js/upload-image.js") 
-    script(src="/public/admin/js/validator.js") 
+        script(src="/public/admin/js/upload-image.js") 
+        script(src="/public/admin/js/validator.js") 
 
 
 

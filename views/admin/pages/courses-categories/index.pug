@@ -10,74 +10,76 @@ include ../../mixins/filterByStatus.pug
 include ../../mixins/changeMulti.pug 
 
 block main 
-    .main 
-        +box-head(pageTitle)
+    if(role.permissions.includes("courses-categories-view"))
+        .main 
+            +box-head(pageTitle)
 
-        +alertSuccess("3000")
-        +alertError("3000")
+            +alertSuccess("3000")
+            +alertError("3000")
 
-        .card.my-4
-            .card-header.fw-bold Tìm kiếm, sắp xếp, lọc theo trạng thái
-            .card-body.card-sort-search
-                +search(keyword)
-                +sort(sort, sortedBy)
-                +filterByStatus(filterOptions, filterByStatus)
-                
-        .card.my-4
-            .card-header.fw-bold Thêm, sửa, cập nhật
-            .card-body.card-crud
-                +changeMulti("courses-categories")
-                
-                a(href=`${prefixAdmin}/courses-categories/create` class="btn btn-secondary") 
-                    .fa-solid.fa-plus.me-2 
-                    span Thêm mới 
+            .card.my-4
+                .card-header.fw-bold Tìm kiếm, sắp xếp, lọc theo trạng thái
+                .card-body.card-sort-search
+                    +search(keyword)
+                    +sort(sort, sortedBy)
+                    +filterByStatus(filterOptions, filterByStatus)
+                    
+            .card.my-4
+                .card-header.fw-bold Thêm, sửa, cập nhật
+                .card-body.card-crud
+                    if(role.permissions.includes("courses-categories-edit"))
+                        +changeMulti("courses-categories")
+                    
+                    if(role.permissions.includes("courses-categories-add"))
+                        a(href=`${prefixAdmin}/courses-categories/create` class="btn btn-secondary") 
+                            .fa-solid.fa-plus.me-2 
+                            span Thêm mới 
 
-        .card.my-4
-            .card-header.fw-bold Danh sách danh mục khóa học
-            .card-body
-                if (categories.length > 0) 
-                    table.table.table-hover
-                        thead
-                            tr.text-center
-                                th(scope='col')
-                                    input(type="checkbox" name="" checkbox-all class="form-check-input")
-                                th(scope='col') STT
-                                th(scope='col') Tên 
-                                th(scope='col') Danh mục cha 
-                                th(scope='col') Vị trí
-                                th(scope='col') Status 
-                                th(scope='col') Actions
-                        
-                        tbody
-                            each category in categories 
-                                tr.text-center.align-middle 
-                                    td 
-                                        input(type="checkbox" name="" checkbox-single=category.id class="form-check-input")
-                                    td #{category.index}
-                                    td.fw-bold #{category.title}
-                                    td 
-                                        if (category.parent_category_id) 
-                                            span #{category.parentCategoryTitle}
-                                        else 
-                                            span Danh mục gốc
-                                    td #{category.position}
-                                    td
-                                        if (category.status === "active")
-                                            a(href=`${prefixAdmin}/courses-categories/updateStatus/${category.id}/inactive` class="badge bg-success") active  
-                                        else 
-                                            a(href=`${prefixAdmin}/courses-categories/updateStatus/${category.id}/active` class="badge bg-danger") inactive
-                                    td 
-                                        a(href=`${prefixAdmin}/courses-categories/edit/${category.id}` class="btn btn-warning me-2") Sửa 
-                                        button(type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target=`#${category.slug}`) Xóa
-                                        +modal(category.slug, category.id, category.title, "danh mục", "courses-categories")  
-                                    
+            .card.my-4
+                .card-header.fw-bold Danh sách danh mục khóa học
+                .card-body
+                    if (categories.length > 0) 
+                        table.table.table-hover
+                            thead
+                                tr.text-center
+                                    th(scope='col')
+                                        input(type="checkbox" name="" checkbox-all class="form-check-input")
+                                    th(scope='col') STT
+                                    th(scope='col') Tên 
+                                    th(scope='col') Danh mục cha 
+                                    th(scope='col') Vị trí
+                                    th(scope='col') Status 
+                                    th(scope='col') Actions
+                            
+                            tbody
+                                each category in categories 
+                                    tr.text-center.align-middle 
+                                        td 
+                                            input(type="checkbox" name="" checkbox-single=category.id class="form-check-input")
+                                        td #{category.index}
+                                        td.fw-bold #{category.title}
+                                        td 
+                                            if (category.parent_category_id) 
+                                                span #{category.parentCategoryTitle}
+                                            else 
+                                                span Danh mục gốc
+                                        td #{category.position}
+                                        td
+                                            +status(category, "courses-categories")
+                                        td 
+                                            if(role.permissions.includes("courses-categories-edit"))
+                                                a(href=`${prefixAdmin}/courses-categories/edit/${category.id}` class="btn btn-warning me-2") Sửa 
+                                            if(role.permissions.includes("courses-categories-delete"))
+                                                button(type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target=`#${category.slug}`) Xóa
+                                            +modal(category.slug, category.id, category.title, "danh mục", "courses-categories")  
+                                        
 
-                    +pagination(pagination)
-                else 
-                    tr(col-span="8") Chưa có danh mục nào
+                        +pagination(pagination)
+                    else 
+                        tr(col-span="8") Chưa có danh mục nào
 
-    script(src="/public/admin/js/search.js") 
-    script(src="/public/admin/js/pagination.js") 
-    script(src="/public/admin/js/sort.js") 
-    script(src="/public/admin/js/filterByStatus.js") 
-    script(src="/public/admin/js/changeMulti.js") 
+        script(src="/public/admin/js/search.js") 
+        script(src="/public/admin/js/pagination.js") 
+        script(src="/public/admin/js/sort.js") 
+        script(src="/public/admin/js/filterByStatus.js") 
+        script(src="/public/admin/js/changeMulti.js") 

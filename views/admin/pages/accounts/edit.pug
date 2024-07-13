@@ -5,55 +5,56 @@ include ../../mixins/tree.pug
 include ../../mixins/status.pug 
 
 block main 
-    .main 
-        +box-head(pageTitle)
-        include ../../partials/require.pug
+    if(role.permissions.includes("accounts-edit"))
+        .main 
+            +box-head(pageTitle)
+            include ../../partials/require.pug
 
-        +alertSuccess(3000)
+            +alertSuccess(3000)
 
-        form(
-            action=`${prefixAdmin}/accounts/edit/${account.id}?_method=PATCH`
-            method="POST"
-            id="form-edit-account"
-        )
-            .row.my-3
-                .col-md-6.col-12 
-                    .form-group     
-                        label(for="title" class="fw-bold") Email *
-                        input(type="email" name="email" id="email" value=account.email required class="form-control") 
-                        p.error-msg
+            form(
+                action=`${prefixAdmin}/accounts/edit/${account.id}?_method=PATCH`
+                method="POST"
+                id="form-edit-account"
+            )
+                .row.my-3
+                    .col-md-6.col-12 
+                        .form-group     
+                            label(for="title" class="fw-bold") Email *
+                            input(type="email" name="email" id="email" value=account.email required class="form-control") 
+                            p.error-msg
 
-            .row.my-3
-                .col-md-6.col-12 
-                    .form-group     
-                        label(for="password" class="fw-bold") Mật khẩu *
-                        input(type="password" name="password" id="password" class="form-control") 
-                        p.error-msg
+                .row.my-3
+                    .col-md-6.col-12 
+                        .form-group     
+                            label(for="password" class="fw-bold") Mật khẩu *
+                            input(type="password" name="password" id="password" class="form-control") 
+                            p.error-msg
 
-            .row.my-3
-                .col-md-6.col-12  
-                    .form-group     
-                        label(for="role_id" class="fw-bold") Vai trò *
-                        select(name="role_id" id="role_id" class="form-select")
-                            option(value="" disabled=true) -- Chọn vai trò --   
-                            each role in roles 
-                                option(value=role.id selected=(role.id===account.role_id?true:false)) #{role.title}   
-                        p.error-msg
-            
-            .row.my-3 
-                .col-md-8.col-12.d-flex.align-items-center.gap-4
-                    span(class="fw-bold p-0 m-0") Trạng thái hoạt động
-                    .form-check.form-check-inline.mb-0
-                        input.form-check-input(type='radio' id="active" name='status' value='active' checked=(account.status==="active"?true:false))
-                        label.form-check-label(for='active') Hoạt động
-                    .form-check.form-check-inline.mb-0
-                        input.form-check-input(type='radio' id="inactive" name='status' value='inactive' checked=(account.status==="inactive"?true:false))
-                        label.form-check-label(for='inactive') Chưa hoạt động
-                 
-            .my-3 
-                button(type="submit" class="btn btn-secondary" btn-create) Cập nhật
+                .row.my-3
+                    .col-md-6.col-12  
+                        .form-group     
+                            label(for="role_id" class="fw-bold") Vai trò *
+                            select(name="role_id" id="role_id" class="form-select")
+                                option(value="" disabled=true) -- Chọn vai trò --   
+                                each role in roles 
+                                    option(value=role.id selected=(role.id===account.role_id?true:false)) #{role.title}   
+                            p.error-msg
+                
+                .row.my-3 
+                    .col-md-8.col-12.d-flex.align-items-center.gap-4
+                        span(class="fw-bold p-0 m-0") Trạng thái hoạt động
+                        .form-check.form-check-inline.mb-0
+                            input.form-check-input(type='radio' id="active" name='status' value='active' checked=(account.status==="active"?true:false))
+                            label.form-check-label(for='active') Hoạt động
+                        .form-check.form-check-inline.mb-0
+                            input.form-check-input(type='radio' id="inactive" name='status' value='inactive' checked=(account.status==="inactive"?true:false))
+                            label.form-check-label(for='inactive') Chưa hoạt động
+                    
+                .my-3 
+                    button(type="submit" class="btn btn-secondary" btn-create) Cập nhật
 
-    script(src="/public/admin/js/validator.js") 
+        script(src="/public/admin/js/validator.js") 
 
 
 

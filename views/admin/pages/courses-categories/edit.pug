@@ -3,56 +3,57 @@ include ../../mixins/box-head.pug
 include ../../mixins/alert.pug 
 include ../../mixins/tree.pug 
 
-block main 
-    .main 
-        +box-head(pageTitle)
-        include ../../partials/require.pug
+block main
+    if(role.permissions.includes("courses-categories-edit"))
+        .main 
+            +box-head(pageTitle)
+            include ../../partials/require.pug
 
-        +alertSuccess(3000)
+            +alertSuccess(3000)
 
-        form(
-            action=`${prefixAdmin}/courses-categories/edit/${category.id}?_method=PATCH`
-            method="POST"
-            id="form-course-category-edit"
-        )
-            .row.my-3
-                .col-md-6.col-12 
-                    .form-group     
-                        label(for="title" class="fw-bold") Tên *
-                        input(type="text" name="title" id="title" value=category.title class="form-control") 
-                        p.error-msg
+            form(
+                action=`${prefixAdmin}/courses-categories/edit/${category.id}?_method=PATCH`
+                method="POST"
+                id="form-course-category-edit"
+            )
+                .row.my-3
+                    .col-md-6.col-12 
+                        .form-group     
+                            label(for="title" class="fw-bold") Tên *
+                            input(type="text" name="title" id="title" value=category.title class="form-control") 
+                            p.error-msg
 
-            .row.my-3
-                .col-md-6.col-12  
-                    .form-group     
-                        label(for="parent_category_id" class="fw-bold") Danh mục cha
-                        select(name="parent_category_id" id="parent_category_id" class="form-select")
-                            option(disabled=true selected) -- Chọn danh mục --   
-                            option(value="" selected=(category.parent_category_id==="")) Danh mục gốc
-                            +tree(categories, category.parent_category_id)
-                        p.error-msg
-        
+                .row.my-3
+                    .col-md-6.col-12  
+                        .form-group     
+                            label(for="parent_category_id" class="fw-bold") Danh mục cha
+                            select(name="parent_category_id" id="parent_category_id" class="form-select")
+                                option(disabled=true selected) -- Chọn danh mục --   
+                                option(value="" selected=(category.parent_category_id==="")) Danh mục gốc
+                                +tree(categories, category.parent_category_id)
+                            p.error-msg
+            
 
-            .row.my-3
-                .col-md-3.col-12.mb-md-0
-                    .form-group 
-                        label(for="position" class="fw-bold") Vị trí
-                        input(type="number" id="position" value=category.position name="position" min="0" class="form-control")    
+                .row.my-3
+                    .col-md-3.col-12.mb-md-0
+                        .form-group 
+                            label(for="position" class="fw-bold") Vị trí
+                            input(type="number" id="position" value=category.position name="position" min="0" class="form-control")    
 
-            .row.my-3
-                .col-md-9.col-12.d-flex.align-items-center.gap-4
-                    span(class="fw-bold p-0 m-0") Trạng thái hoạt động
-                    .form-check.form-check-inline.mb-0
-                        input.form-check-input(type='radio' id="active" name='status' value='active' checked=(category.status==="active"?true:false))
-                        label.form-check-label(for='active') Hoạt động
-                    .form-check.form-check-inline.mb-0
-                        input.form-check-input(type='radio' id="inactive" name='status' value='inactive' checked=(category.status==="inactive"?true:false))
-                        label.form-check-label(for='inactive') Chưa hoạt động
+                .row.my-3
+                    .col-md-9.col-12.d-flex.align-items-center.gap-4
+                        span(class="fw-bold p-0 m-0") Trạng thái hoạt động
+                        .form-check.form-check-inline.mb-0
+                            input.form-check-input(type='radio' id="active" name='status' value='active' checked=(category.status==="active"?true:false))
+                            label.form-check-label(for='active') Hoạt động
+                        .form-check.form-check-inline.mb-0
+                            input.form-check-input(type='radio' id="inactive" name='status' value='inactive' checked=(category.status==="inactive"?true:false))
+                            label.form-check-label(for='inactive') Chưa hoạt động
 
-            .my-3 
-                button(type="submit" class="btn btn-secondary" btn-create) Cập nhật
+                .my-3 
+                    button(type="submit" class="btn btn-secondary" btn-create) Cập nhật
 
-    script(src="/public/admin/js/validator.js") 
+        script(src="/public/admin/js/validator.js") 
 
 
 

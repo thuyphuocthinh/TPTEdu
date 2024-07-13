@@ -12,9 +12,9 @@
             .header__dropdown.hidden 
                 ul.header__list 
                     li 
-                        a(href=`${prefixAdmin}/accounts`) Admin 
+                        a(href=`${prefixAdmin}/accounts`) #{account.email} - #{role.title}  
                     li 
-                        a(href="#") Đăng xuất
+                        a(href=`${prefixAdmin}/auth/logout`) Đăng xuất
 
 
 

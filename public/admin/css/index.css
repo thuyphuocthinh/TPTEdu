@@ -61,7 +61,8 @@ body {
 .header__dropdown {
     position: absolute;
     top: 30px;
-    width: 200px;
+    min-width: 200px;
+    width: 400px;
     right: 0;
 }
 

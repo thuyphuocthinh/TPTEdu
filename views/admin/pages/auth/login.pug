@@ -2,7 +2,9 @@ extends ../../layouts/authLayout.pug
 include ../../mixins/alert.pug 
 
 block main 
+
     +alertError("3000")
+    +alertSuccess("3000")
     
     form(
             action=`${prefixAdmin}/auth/login`

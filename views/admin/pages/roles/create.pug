@@ -4,36 +4,37 @@ include ../../mixins/image-upload.pug
 include ../../mixins/alert.pug 
 include ../../mixins/tree.pug 
 
-block main 
-    .main 
-        +box-head(pageTitle)
-        include ../../partials/require.pug
+block main
+    if(role.permissions.includes("roles-create"))
+        .main 
+            +box-head(pageTitle)
+            include ../../partials/require.pug
 
-        +alertSuccess(3000)
+            +alertSuccess(3000)
 
-        form(
-            action=`${prefixAdmin}/roles/create`
-            method="POST"
-            id="form-create-role"
-        )
-            .row.my-3
-                .col-md-6.col-12 
-                    .form-group     
-                        label(for="title" class="fw-bold") Tên *
-                        input(type="text" name="title" id="title" class="form-control") 
-                        p.error-msg
+            form(
+                action=`${prefixAdmin}/roles/create`
+                method="POST"
+                id="form-create-role"
+            )
+                .row.my-3
+                    .col-md-6.col-12 
+                        .form-group     
+                            label(for="title" class="fw-bold") Tên *
+                            input(type="text" name="title" id="title" class="form-control") 
+                            p.error-msg
 
-            .row.my-3  
-                .col-md-6.col-12
-                    .form-group 
-                        label(class="fw-bold") Mô tả *
-                        textarea(name="description" id="description" class="form-control" rows="10")
-                        p.error-msg
+                .row.my-3  
+                    .col-md-6.col-12
+                        .form-group 
+                            label(class="fw-bold") Mô tả *
+                            textarea(name="description" id="description" class="form-control" rows="10")
+                            p.error-msg
 
-            .my-3 
-                button(type="submit" class="btn btn-secondary" btn-create) Tạo mới
+                .my-3 
+                    button(type="submit" class="btn btn-secondary" btn-create) Tạo mới
 
-    script(src="/public/admin/js/validator.js") 
+        script(src="/public/admin/js/validator.js") 
 
 
 

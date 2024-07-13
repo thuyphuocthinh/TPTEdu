@@ -8,53 +8,56 @@ include ../../mixins/search.pug
 include ../../mixins/sort.pug 
 
 block main 
-    .main 
-        +box-head(pageTitle)
+    if(role.permissions.includes("roles-view"))
 
-        +alertSuccess("3000")
-        +alertError("3000")
+        .main 
+            +box-head(pageTitle)
 
-        .card.my-4
-            .card-header.fw-bold Tìm kiếm, sắp xếp, lọc theo trạng thái
-            .card-body.card-sort-search
-                +search(keyword)
-                +sort(sort, sortedBy)
-                
-        .card.my-4
-            .card-header.fw-bold Thêm, sửa, cập nhật
-            .card-body.card-crud.d-flex.justify-content-end                
-                a(href=`${prefixAdmin}/roles/create` class="btn btn-secondary") 
-                    .fa-solid.fa-plus.me-2 
-                    span Thêm mới 
+            +alertSuccess("3000")
+            +alertError("3000")
 
-        .card.my-4
-            .card-header.fw-bold Danh sách vai trò
-            .card-body
-                if (roles.length > 0) 
-                    table.table.table-hover
-                        thead
-                            tr.text-center
-                                th(scope='col') STT
-                                th(scope='col') Tên 
-                                th(scope='col') Mô tả 
-                                th(scope='col') Actions
-                        
-                        tbody
-                            each role in roles 
-                                tr.text-center.align-middle 
-                                    td #{role.index}
-                                    td.fw-bold #{role.title}
-                                    td #{role.description}
-                                    td 
-                                        a(href=`${prefixAdmin}/roles/edit/${role.id}` class="btn btn-warning me-2") Sửa 
-                                        button(type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target=`#${role.slug}`) Xóa
-                                        +modal(role.slug, role.id, role.title, "vai trò", "roles")  
-                                    
+            .card.my-4
+                .card-header.fw-bold Tìm kiếm, sắp xếp, lọc theo trạng thái
+                .card-body.card-sort-search
+                    +search(keyword)
+                    +sort(sort, sortedBy)
 
-                    +pagination(pagination)
-                else 
-                    tr(col-span="8") Chưa có vai trò nào
+            if(role.permissions.includes("roles-add"))
+                .card.my-4
+                    .card-header.fw-bold Thêm, sửa, cập nhật
+                    .card-body.card-crud.d-flex.justify-content-end                
+                        a(href=`${prefixAdmin}/roles/create` class="btn btn-secondary") 
+                            .fa-solid.fa-plus.me-2 
+                            span Thêm mới 
 
-    script(src="/public/admin/js/search.js") 
-    script(src="/public/admin/js/pagination.js") 
-    script(src="/public/admin/js/sort.js") 
+            .card.my-4
+                .card-header.fw-bold Danh sách vai trò
+                .card-body
+                    if (roles.length > 0) 
+                        table.table.table-hover
+                            thead
+                                tr.text-center
+                                    th(scope='col') STT
+                                    th(scope='col') Tên 
+                                    th(scope='col') Mô tả 
+                                    th(scope='col') Actions
+                            
+                            tbody
+                                each role in roles 
+                                    tr.text-center.align-middle 
+                                        td #{role.index}
+                                        td.fw-bold #{role.title}
+                                        td #{role.description}
+                                        td 
+                                            a(href=`${prefixAdmin}/roles/edit/${role.id}` class="btn btn-warning me-2") Sửa 
+                                            button(type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target=`#${role.slug}`) Xóa
+                                            +modal(role.slug, role.id, role.title, "vai trò", "roles")  
+                                        
+
+                        +pagination(pagination)
+                    else 
+                        tr(col-span="8") Chưa có vai trò nào
+
+        script(src="/public/admin/js/search.js") 
+        script(src="/public/admin/js/pagination.js") 
+        script(src="/public/admin/js/sort.js") 

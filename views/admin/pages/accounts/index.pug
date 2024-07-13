@@ -10,68 +10,73 @@ include ../../mixins/filterByStatus.pug
 include ../../mixins/changeMulti.pug 
 
 block main 
-    .main 
-        +box-head(pageTitle)
+    if (role.permissions.includes("accounts-view"))
+        .main 
+            +box-head(pageTitle)
+            +alertSuccess("3000")
+            +alertError("3000")
 
-        +alertSuccess("3000")
-        +alertError("3000")
+            .card.my-4
+                .card-header.fw-bold Tìm kiếm, sắp xếp, lọc theo trạng thái
+                .card-body.card-sort-search
+                    +search(keyword)
+                    +sort(sort, sortedBy)
+                    +filterByStatus(filterOptions, filterByStatus)
+                    
+            .card.my-4
+                .card-header.fw-bold Thêm, sửa, cập nhật
+                .card-body.card-crud.d-flex
+                    if(role.permissions.includes("accounts-edit"))
+                        +changeMulti("accounts")
+                    if(role.permissions.includes("accounts-add"))
+                        a(href=`${prefixAdmin}/accounts/create` class="btn btn-secondary") 
+                            .fa-solid.fa-plus.me-2 
+                            span Thêm mới 
 
-        .card.my-4
-            .card-header.fw-bold Tìm kiếm, sắp xếp, lọc theo trạng thái
-            .card-body.card-sort-search
-                +search(keyword)
-                +sort(sort, sortedBy)
-                +filterByStatus(filterOptions, filterByStatus)
-                
-        .card.my-4
-            .card-header.fw-bold Thêm, sửa, cập nhật
-            .card-body.card-crud.d-flex
-                +changeMulti("accounts")
-                a(href=`${prefixAdmin}/accounts/create` class="btn btn-secondary") 
-                    .fa-solid.fa-plus.me-2 
-                    span Thêm mới 
+            .card.my-4
+                .card-header.fw-bold Danh sách vai trò
+                .card-body
+                    if (accounts.length > 0) 
+                        table.table.table-hover
+                            thead
+                                tr.text-center
+                                    th(scope='col')
+                                        input(type="checkbox" name="" checkbox-all class="form-check-input")
+                                    th(scope='col') STT
+                                    th(scope='col') Email 
+                                    th(scope='col') Vai trò
+                                    th(scope='col') Trạng thái
+                                    th(scope='col') Actions
+                            
+                            tbody
+                                each account in accounts 
+                                    tr.text-center.align-middle 
+                                        td 
+                                            input(type="checkbox" name="" checkbox-single=account.id class="form-check-input")  
+                                        td #{account.index}
+                                        td.fw-bold #{account.email}
+                                        td 
+                                            if (account.role_id)
+                                                span #{account.role.title}
+                                            else 
+                                                span Chưa xác định
+                                        td 
+                                            +status(account, "accounts")
+                                        td 
+                                            if(role.permissions.includes("accounts-edit"))
+                                                a(href=`${prefixAdmin}/accounts/edit/${account.id}` class="btn btn-warning me-2") Sửa 
+                                            if(role.permissions.includes("accounts-delete"))
+                                                button(type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target=`#${account.slug}`) Xóa
+                                            +modal(account.slug, account.id, account.email, "tài khoản", "accounts")  
+                                        
 
-        .card.my-4
-            .card-header.fw-bold Danh sách vai trò
-            .card-body
-                if (accounts.length > 0) 
-                    table.table.table-hover
-                        thead
-                            tr.text-center
-                                th(scope='col')
-                                    input(type="checkbox" name="" checkbox-all class="form-check-input")
-                                th(scope='col') STT
-                                th(scope='col') Email 
-                                th(scope='col') Vai trò
-                                th(scope='col') Trạng thái
-                                th(scope='col') Actions
-                        
-                        tbody
-                            each account in accounts 
-                                tr.text-center.align-middle 
-                                    td 
-                                        input(type="checkbox" name="" checkbox-single=account.id class="form-check-input")  
-                                    td #{account.index}
-                                    td.fw-bold #{account.email}
-                                    td 
-                                        if (account.role_id)
-                                            span #{account.role.title}
-                                        else 
-                                            span Chưa xác định
-                                    td 
-                                        +status(account, "accounts")
-                                    td 
-                                        a(href=`${prefixAdmin}/accounts/edit/${account.id}` class="btn btn-warning me-2") Sửa 
-                                        button(type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target=`#${account.slug}`) Xóa
-                                        +modal(account.slug, account.id, account.email, "tài khoản", "accounts")  
-                                    
+                        +pagination(pagination)
+                    else 
+                        tr(col-span="8") Chưa có tài khoản quản trị nào
 
-                    +pagination(pagination)
-                else 
-                    tr(col-span="8") Chưa có tài khoản quản trị nào
+        script(src="/public/admin/js/search.js") 
+        script(src="/public/admin/js/changeMulti.js") 
+        script(src="/public/admin/js/pagination.js") 
+        script(src="/public/admin/js/filterByStatus.js") 
+        script(src="/public/admin/js/sort.js")  
 
-    script(src="/public/admin/js/search.js") 
-    script(src="/public/admin/js/changeMulti.js") 
-    script(src="/public/admin/js/pagination.js") 
-    script(src="/public/admin/js/filterByStatus.js") 
-    script(src="/public/admin/js/sort.js") 

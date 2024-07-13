@@ -5,35 +5,36 @@ include ../../mixins/alert.pug
 include ../../mixins/tree.pug 
 
 block main 
-    .main 
-        +box-head(pageTitle)
-        include ../../partials/require.pug
+    if(role.permissions.includes("roles-edit"))
+        .main 
+            +box-head(pageTitle)
+            include ../../partials/require.pug
 
-        +alertSuccess(3000)
+            +alertSuccess(3000)
 
-        form(
-            action=`${prefixAdmin}/roles/edit/${role.id}?_method=PATCH`
-            method="POST"
-            id="form-create-role"
-        )
-            .row.my-3
-                .col-md-6.col-12 
-                    .form-group     
-                        label(for="title" class="fw-bold") Tên *
-                        input(type="text" name="title" id="title" value=role.title class="form-control") 
-                        p.error-msg
+            form(
+                action=`${prefixAdmin}/roles/edit/${role.id}?_method=PATCH`
+                method="POST"
+                id="form-create-role"
+            )
+                .row.my-3
+                    .col-md-6.col-12 
+                        .form-group     
+                            label(for="title" class="fw-bold") Tên *
+                            input(type="text" name="title" id="title" value=role.title class="form-control") 
+                            p.error-msg
 
-            .row.my-3  
-                .col-md-6.col-12
-                    .form-group 
-                        label(class="fw-bold") Mô tả *
-                        textarea(name="description" id="description" class="form-control" rows="10") #{role.description}
-                        p.error-msg
+                .row.my-3  
+                    .col-md-6.col-12
+                        .form-group 
+                            label(class="fw-bold") Mô tả *
+                            textarea(name="description" id="description" class="form-control" rows="10") #{role.description}
+                            p.error-msg
 
-            .my-3 
-                button(type="submit" class="btn btn-secondary" btn-create) Cập nhật
+                .my-3 
+                    button(type="submit" class="btn btn-secondary" btn-create) Cập nhật
 
-    script(src="/public/admin/js/validator.js") 
+        script(src="/public/admin/js/validator.js") 
 
 
 

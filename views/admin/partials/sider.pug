@@ -1,84 +1,97 @@
 .sider 
-    .sider__group 
-        p.sider__title Core 
-        
-        .sider__block
-            a(href="" class="sider__item")  
-                span
-                    .fa-solid.fa-gauge
-                span Dashboard 
-
-    .sider__group 
-        p.sider__title Khóa học
-
-        .sider-block
-            a(href=`${prefixAdmin}/courses` class="sider__item")  
-                span
-                    .fa-solid.fa-gauge
-                span Khóa học
+    if(role.permissions.includes("dashboard-view"))
+        .sider__group 
+            p.sider__title Core 
             
-            a(href=`${prefixAdmin}/courses-categories` class="sider__item")  
-                span
-                    .fa-solid.fa-gauge
-                span Danh mục khóa học 
+            .sider__block
+                a(href="" class="sider__item")  
+                    span
+                        .fa-solid.fa-gauge
+                    span Dashboard 
 
     .sider__group 
-        p.sider__title Đơn hàng
+        if(role.permissions.includes("courses-view"))
+            p.sider__title Khóa học
 
-        .sider-block
-            a(href="" class="sider__item")  
-                span
-                    .fa-solid.fa-gauge
-                span Đơn hàng
+            .sider-block
+                if(role.permissions.includes("courses-view"))
+                    a(href=`${prefixAdmin}/courses` class="sider__item")  
+                        span
+                            .fa-solid.fa-gauge
+                        span Khóa học
+                
+                if(role.permissions.includes("courses-categories-view"))
+                    a(href=`${prefixAdmin}/courses-categories` class="sider__item")  
+                        span
+                            .fa-solid.fa-gauge
+                        span Danh mục khóa học 
+
+    if(role.permissions.includes("orders-view"))
+        .sider__group 
+            p.sider__title Đơn hàng
+
+            .sider-block
+                a(href="" class="sider__item")  
+                    span
+                        .fa-solid.fa-gauge
+                    span Đơn hàng
     
     .sider__group 
-        p.sider__title Blogs
+        if(role.permissions.includes("blogs-view"))
+            p.sider__title Blogs
 
         .sider-block
-            a(href=`${prefixAdmin}/blogs` class="sider__item")  
-                span
-                    .fa-solid.fa-gauge
-                span Blogs
-            
-            a(href=`${prefixAdmin}/blogs-categories` class="sider__item")  
-                span
-                    .fa-solid.fa-gauge
-                span Danh mục blogs 
+            if(role.permissions.includes("blogs-view"))
+                a(href=`${prefixAdmin}/blogs` class="sider__item")  
+                    span
+                        .fa-solid.fa-gauge
+                    span Blogs
+                
+            if(role.permissions.includes("blogs-categories-view"))
+                a(href=`${prefixAdmin}/blogs-categories` class="sider__item")  
+                    span
+                        .fa-solid.fa-gauge
+                    span Danh mục blogs 
 
     .sider__group 
-        p.sider__title Accounts
+        if(role.permissions.includes("accounts-view"))
+            p.sider__title Accounts
 
         .sider-block
-            a(href=`${prefixAdmin}/accounts` class="sider__item")  
-                span
-                    .fa-solid.fa-gauge
-                span Accounts
-            
-            a(href=`${prefixAdmin}/roles` class="sider__item")  
-                span
-                    .fa-solid.fa-gauge
-                span Roles 
+            if(role.permissions.includes("accounts-view"))
+                a(href=`${prefixAdmin}/accounts` class="sider__item")  
+                    span
+                        .fa-solid.fa-gauge
+                    span Tài khoản quản trị
+                
+            if(role.permissions.includes("roles-view"))
+                a(href=`${prefixAdmin}/roles` class="sider__item")  
+                    span
+                        .fa-solid.fa-gauge
+                    span Vai trò
 
-            a(href="" class="sider__item")  
-                span
-                    .fa-solid.fa-gauge
-                span Phân quyền
+            if(role.permissions.includes("permissions-view"))
+                a(href=`${prefixAdmin}/permissions` class="sider__item")  
+                    span
+                        .fa-solid.fa-gauge
+                    span Phân quyền
+    if(role.permissions.includes("users-view"))
+        .sider__group 
+            p.sider__title Users
 
-    .sider__group 
-        p.sider__title Users
+            .sider-block
+                a(href="" class="sider__item")  
+                    span
+                        .fa-solid.fa-gauge
+                    span Users
 
-        .sider-block
-            a(href="" class="sider__item")  
-                span
-                    .fa-solid.fa-gauge
-                span Users
+    if(role.permissions.includes("settings-view"))
+        .sider__group 
+            p.sider__title Cài đặt chung
 
-    .sider__group 
-        p.sider__title Cài đặt chung
-
-        .sider-block
-            a(href="" class="sider__item")  
-                span
-                    .fa-solid.fa-gauge
-                span Cài đặt chung
+            .sider-block
+                a(href="" class="sider__item")  
+                    span
+                        .fa-solid.fa-gauge
+                    span Cài đặt chung
             

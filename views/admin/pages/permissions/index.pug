@@ -1,0 +1,109 @@
+extends ../../layouts/defaultLayout.pug
+include ../../mixins/box-head.pug 
+include ../../mixins/alert.pug 
+include ../../mixins/row-active.pug 
+
+block main 
+    if(role.permissions.includes("permissions-view"))
+        .main 
+            +box-head(pageTitle)
+            +alertSuccess("3000")
+            
+            if(role.permissions.includes("permissions-edit"))
+                .card.my-4
+                    .card-header.fw-bold Cập nhật
+                    .card-body.card-crud.d-flex.justify-content-end
+                        form(
+                            action=`${prefixAdmin}/permissions/edit?_method=PATCH` 
+                            method="post"
+                            id="form-update-permissions"
+                        )                 
+                            input(type="text" name="permissionsUpdate" style="display: none;")
+                            button(type="submit" class="btn btn-secondary") Cập nhật
+
+            .card.my-4
+                .card-header.fw-bold Bảng phân quyền
+                .card-body
+                    if (roles.length > 0) 
+                        table(table-permissions=roles).table.table-hover
+                            thead(roles-data=roles.length)
+                                tr.text-center
+                                    th Tính năng
+                                    each role in roles 
+                                        th(role-id=role.id) #{role.title}
+                            tbody 
+                                //- Dashboard
+                                +row-active("Dashboard")
+                                +row-function("Xem", "dashboard", "view", role)
+                                
+                                //- Orders
+                                +row-active("Đơn hàng")
+                                +row-function("Xem", "orders", "view", role)
+                                +row-function("Duyệt", "orders", "verify", role)
+
+                                //- Courses
+                                +row-active("Khóa học")
+                                +row-function("Thêm", "courses", "add", role)
+                                +row-function("Xóa", "courses", "delete", role)
+                                +row-function("Sửa", "courses", "edit", role)
+                                +row-function("Xem", "courses", "view", role)
+
+                                //- Courses-categories
+                                +row-active("Danh mục khóa học")
+                                +row-function("Thêm", "courses-categories", "add", role)
+                                +row-function("Xóa", "courses-categories", "delete", role)
+                                +row-function("Sửa", "courses-categories", "edit", role)
+                                +row-function("Xem", "courses-categories", "view", role)
+
+                                //- Blogs
+                                +row-active("Blogs")
+                                +row-function("Thêm", "blogs", "add", role)
+                                +row-function("Xóa", "blogs", "delete", role)
+                                +row-function("Sửa", "blogs", "edit", role)
+                                +row-function("Xem", "blogs", "view", role)
+
+                                //- Blogs-categories
+                                +row-active("Danh mục blogs")
+                                +row-function("Thêm", "blogs-categories", "add", role)
+                                +row-function("Xóa", "blogs-categories", "delete", role)
+                                +row-function("Sửa", "blogs-categories", "edit", role)
+                                +row-function("Xem", "blogs-categories", "view", role)
+
+                                //- Accounts
+                                +row-active("Tài khoản quản trị")
+                                +row-function("Thêm", "accounts", "add", role)
+                                +row-function("Xóa", "accounts", "delete", role)
+                                +row-function("Sửa", "accounts", "edit", role)
+                                +row-function("Xem", "accounts", "view", role)
+
+                                //- Roles
+                                +row-active("Vai trò")
+                                +row-function("Thêm", "roles", "add", role)
+                                +row-function("Xóa", "roles", "delete", role)
+                                +row-function("Sửa", "roles", "edit", role)
+                                +row-function("Xem", "roles", "view", role)
+
+                                //- Permissions
+                                +row-active("Bảng phân quyền")
+                                +row-function("Sửa", "permissions", "edit", role)
+                                +row-function("Xem", "permissions", "view", role)
+
+                                //- Users
+                                +row-active("Người dùng")
+                                +row-function("Thêm", "users", "add", role)
+                                +row-function("Xóa", "users", "delete", role)
+                                +row-function("Sửa", "users", "edit", role)
+                                +row-function("Xem", "users", "view", role)
+
+                                //- Settings
+                                +row-active("Cài đặt chung")
+                                +row-function("Thêm", "settings", "add", role)
+                                +row-function("Xóa", "settings", "delete", role)
+                                +row-function("Sửa", "settings", "edit", role)  
+                                +row-function("Xem", "settings", "view", role)
+
+                    else    
+                        tr(colspan="8") 
+                            td Chưa có vai trò nào được tạo trong hệ thống. 
+        
+        script(src="/public/admin/js/permissions.js")

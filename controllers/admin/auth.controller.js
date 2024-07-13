@@ -61,7 +61,20 @@ const postLogin = async (req, res) => {
   }
 };
 
+const logout = async (req, res) => {
+  try {
+    if (req.cookies.token) {
+      res.clearCookie("token");
+      req.flash("success", "Đăng xuất thành công");
+      res.redirect(`${prefixAdmin}/auth/login`);
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 module.exports = {
   getLogin,
   postLogin,
+  logout,
 };

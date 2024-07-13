@@ -1,5 +1,11 @@
 mixin status(item, route)
     if (item.status === "active")
-        a(href=`${prefixAdmin}/${route}/updateStatus/${item.id}/inactive` class="badge bg-success") Active 
+        if (role.permissions.includes(`${route}-edit`))
+            a(href=`${prefixAdmin}/${route}/updateStatus/${item.id}/inactive` class="badge bg-success") Active
+        else 
+            span.badge.bg-success Active 
     else 
-        a(href=`${prefixAdmin}/${route}/updateStatus/${item.id}/active` class="badge bg-danger") Inactive 
+        if (role.permissions.includes(`${route}-edit`))
+            a(href=`${prefixAdmin}/${route}/updateStatus/${item.id}/active` class="badge bg-danger") Inactive 
+        else 
+            span.badge.bg-danger Inactive
