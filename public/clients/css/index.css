@@ -1,6 +1,5 @@
 a {
     text-decoration: none;
-    color: #fff;
 }
 
 ul {
@@ -16,6 +15,7 @@ ul {
 body {
     overflow-x: hidden;
 }
+
 
 .header__top {
     padding: 15px 20px;
@@ -93,6 +93,9 @@ body {
 .header__bottom {
     background-color: #000;
     color: #fff;
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
 }
 
 .header__bottom>.header__list {
@@ -107,6 +110,7 @@ body {
     display: inline-block;
     padding: 10px 1rem;
     transition: all .5s;
+    color: #fff;
 }
 
 .header__bottom>.header__list>.header__item>a:hover {
@@ -116,7 +120,7 @@ body {
 @media screen and (max-width: 600px) {
     .header__bottom>.header__list {
         justify-content: flex-start;
-        width: 700px;
+        width: 800px;
     }
 }
 
@@ -130,4 +134,138 @@ body {
     text-align: center;
     color: #fff;
     font-size: 14px;
+}
+
+.owl-carousel {
+    position: relative;
+}
+
+.owl-carousel .owl-nav button>span {
+    display: block;
+    position: relative;
+    top: -3px;
+}
+
+.owl-carousel .owl-nav button.owl-next,
+.owl-carousel .owl-nav button.owl-prev {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-100%);
+    font-size: 35px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #fff;
+    box-shadow: 2px 2px 8px 0 rgba(0, 0, 0, .4);
+    width: 40px;
+    height: 40px;
+}
+
+.owl-carousel .owl-nav button.owl-next {
+    right: -15px;
+}
+
+.owl-carousel .owl-nav button.owl-prev {
+    left: -15px;
+}
+
+.owl-carousel .owl-dots {
+    display: none;
+}
+
+#myMainCarousel.owl-carousel .owl-nav {
+    display: none;
+}
+
+#myMainCarousel.owl-carousel .owl-dots {
+    display: block;
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+#myMainCarousel.owl-carousel .owl-dots .owl-dot span {
+    background-color: rgba(255, 255, 255, .5);
+}
+
+#myMainCarousel.owl-carousel .owl-dots .owl-dot.active span {
+    background-color: #fff;
+}
+
+#myMainCarousel.owl-carousel .carousel-image {
+    height: 450px;
+}
+
+.detail__img {
+    height: 400px;
+}
+
+.course__info {
+    background-color: #fff;
+    padding: 1rem 1.5rem;
+    border-radius: 10px;
+    box-shadow: 2px 2px 8px 0 rgba(0, 0, 0, .2);
+}
+
+.relatedCourse {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    box-shadow: 2px 2px 8px 0 rgba(0, 0, 0, .4);
+    padding: 10px;
+    border-radius: 10px;
+    background-color: #fff;
+}
+
+.relatedCourse:hover {
+    background-color: #d7d7d7;
+}
+
+.relatedCourse img {
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+}
+
+.relatedCourse p {
+    color: #000;
+    margin: 0;
+    padding: 0;
+}
+
+.categories__list {
+    background-color: #000;
+    border-radius: 10px;
+}
+
+.categories__list a {
+    display: block;
+    padding: 10px 15px;
+    color: #fff;
+}
+
+.categories__list a:hover {
+    background-color: #616161;
+}
+
+.categories__list li:first-child a:hover {
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+.categories__list li:last-child a:hover {
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+
+@media screen and (max-width: 567px) {
+    #myMainCarousel.owl-carousel .carousel-image {
+        height: 250px;
+    }
+
+    .detail__img {
+        height: 250px;
+    }
 }

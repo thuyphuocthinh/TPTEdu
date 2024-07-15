@@ -3,7 +3,7 @@
         a(href="/" class="header__logo") TPT-edu
         .header__search.d-md-block.d-none
             form.d-flex(role='search')
-                input.form-control.me-2(type='search' placeholder='Tìm kiếm sản phẩm'  aria-label='Search')
+                input.form-control.me-2(type='search' placeholder='Tìm kiếm khóa học'  aria-label='Search')
                 button.btn.btn-secondary(type='submit') 
                     span(class="fa-solid fa-magnifying-glass")
         .header__right 
@@ -25,9 +25,11 @@
     .header__bottom 
         .header__list 
             li.header__item 
-                a(href="#" class="header__link") Tất cả khóa học 
+                a(href="/" class="header__link") Trang chủ
             li.header__item 
-                a(href="#" class="header__link") Khóa học theo danh mục 
+                a(href="/courses" class="header__link") Tất cả khóa học 
+            li.header__item 
+                a(href="/courses-categories" class="header__link") Khóa học theo danh mục 
             li.header__item 
                 a(href="#" class="header__link") Blogs 
             li.header__item 

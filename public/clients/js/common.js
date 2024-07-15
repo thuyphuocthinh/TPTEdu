@@ -38,10 +38,47 @@ if (message) {
 
 // carousel
 $(document).ready(function () {
-  $("#myCarousel").owlCarousel({
+  $("#myCoursesCarousel").owlCarousel({
     loop: true,
     margin: 10,
     nav: true,
+    autoplay: true,
+    responsive: {
+      0: {
+        items: 1,
+      },
+      600: {
+        items: 2,
+      },
+      1000: {
+        items: 4,
+      },
+    },
+  });
+
+  $("#myBlogsCarousel").owlCarousel({
+    loop: true,
+    margin: 10,
+    nav: true,
+    autoplay: true,
+    responsive: {
+      0: {
+        items: 1,
+      },
+      600: {
+        items: 2,
+      },
+      1000: {
+        items: 4,
+      },
+    },
+  });
+
+  $("#myMainCarousel").owlCarousel({
+    loop: true,
+    margin: 10,
+    nav: true,
+    autoplay: true,
     responsive: {
       0: {
         items: 1,

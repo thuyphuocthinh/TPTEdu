@@ -1,0 +1,32 @@
+mixin pagination(pagination)
+    nav.mt-4.d-flex.justify-content-center
+        ul(class="pagination mx-auto")
+            li(class="page-item")
+                button(
+                    class="page-link" 
+                    id="prevPageBtn" 
+                    button-pagination=1
+                    disabled=(pagination.currentPage === 1 ? true:false)
+                    class=`${pagination.currentPage === 1? "disabled":""}`
+                ) Trang đầu
+        
+            if (pagination.currentPage > 1) 
+                li(class="page-item")
+                    button(class="page-link" id="prevPageBtn" button-pagination=pagination.currentPage - 1) Trang trước
+        
+            -for(let i = 1; i <= pagination.totalPages; i++)
+                li(class=`page-item ${i === pagination.currentPage ? "active" : ""}`)
+                    button(class="page-link" button-pagination=i) #{i}
+        
+            if (pagination.currentPage < pagination.totalPages)
+                li(class="page-item")
+                    button(class="page-link" id="nextPageBtn" button-pagination=pagination.currentPage + 1) Kế tiếp
+            
+            li(class="page-item")
+                button(
+                    class="page-link" 
+                    id="prevPageBtn" 
+                    button-pagination=pagination.totalPages
+                    disabled=(pagination.totalPages === pagination.currentPage ? true : false)
+                    class=`${pagination.totalPages === pagination.currentPage ? "disabled":""}`
+                ) Trang cuối 

@@ -11,7 +11,7 @@ const index = async (req, res) => {
     let courses = await Courses.find({
       deleted: false,
       status: "active",
-    }).limit(4);
+    }).limit(8);
     courses = newPrices(courses);
     const blogs = await Blogs.find({ deleted: false, status: "active" })
       .limit(4)

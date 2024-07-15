@@ -1,0 +1,54 @@
+extends ../../layouts/defaultLayout.pug 
+include ../../mixins/carousels.pug
+include ../../mixins/item.pug
+
+block main 
+
+    .container
+        .row.mt-5
+            .col-md-6.col-12.mb-md-0.mb-3 
+                img(src=course.thumbnail, alt=course.thumbnail class="detail__img img-thumbnail" style="width: 100%;") 
+            
+            .col-md-6.col-12
+                div(
+                    class="d-flex flex-column justify-content-between course__info"
+                    style="height: 100%;"
+                ) 
+                    h4.fw-bold #{course.title}
+                    .info.flex-grow-1
+                        p.p-0.mb-4
+                            span(style="text-decoration: line-through; font-size: 30px; color: blue; opacity: .5;" class="me-2") #{course.price}$
+                            span(style="font-size: 30px; color: blue;").fw-bold #{course.newPrice}$
+
+                        p.p-0.mb-4
+                            span(class="me-3").fw-bold Danh mục
+                            span.badge.bg-success #{course.categoryTitle}
+
+                        p.p-0.mb-4 
+                            span(class="me-3").fw-bold Thời lượng
+                            span.badge.bg-secondary 50 videos
+
+                        p.p-0.mb-4
+                            span(class="me-3").fw-bold Sở hữu khóa học
+                            span.badge.bg-secondary Trọn đời
+
+                        p.p-0.mb-4
+                            span(class="me-3").fw-bold Giảng viên
+                            span.badge.bg-secondary Thủy Phước Thịnh
+                    div 
+                        button(class="btn btn-primary") 
+                            span Thêm vào giỏ 
+                            i.fa-solid.fa-cart-shopping
+        
+        .row.mt-5 
+            .col-md-8.col-12.mb-md-0.mb-3
+                h5 Mô tả
+                div !{course.description}
+            
+            .col-md-4.col-12 
+                h5.mb-4 Khóa học liên quan 
+                each course in relatedCourses   
+                    +relatedCourse(course)
+                
+
+                    

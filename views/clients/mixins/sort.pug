@@ -1,0 +1,8 @@
+mixin sort(sort, sortedBy)
+    select.form-select(name="change-multi" form-select-sort style="width: 300px;")
+        option(selected='' disabled=true) -- Chọn tiêu chí sắp xếp --
+        each item in sort 
+            option(
+                value=item.keyValue 
+                selected=(sortedBy===item.keyValue?true:false)
+            ) #{item.title} 
