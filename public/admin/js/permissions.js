@@ -42,6 +42,7 @@ if (table) {
       }
     });
   });
+  inputText.value = JSON.stringify(permissions);
 }
 
 // listen on click event to update permissions array

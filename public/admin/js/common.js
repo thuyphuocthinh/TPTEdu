@@ -16,14 +16,17 @@ document.addEventListener("click", (e) => {
 
 // alert
 const message = document.querySelector(".message.info");
-const time = message.getAttribute("data-time");
-const idTimeout = setTimeout(() => {
-  message.style.animation = "fadeOut linear .5s forwards";
-}, time);
-const alertBtnClose = message.querySelector(".alert-btn-close");
-if (alertBtnClose) {
-  alertBtnClose.addEventListener("click", () => {
-    clearTimeout(idTimeout);
+let time, alertBtnClose, idTimeout;
+if (message) {
+  time = message.getAttribute("data-time");
+  idTimeout = setTimeout(() => {
     message.style.animation = "fadeOut linear .5s forwards";
-  });
+  }, time);
+  alertBtnClose = message.querySelector(".alert-btn-close");
+  if (alertBtnClose) {
+    alertBtnClose.addEventListener("click", () => {
+      clearTimeout(idTimeout);
+      message.style.animation = "fadeOut linear .5s forwards";
+    });
+  }
 }

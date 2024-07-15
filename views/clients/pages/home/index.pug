@@ -1,0 +1,29 @@
+extends ../../layouts/defaultLayout.pug 
+include ../../mixins/carousels.pug
+include ../../mixins/item.pug
+
+block main 
+    .carousel(
+        style=`
+            background-image: url(${carousels[1].image}); 
+            background-position: center; 
+            background-repeat: no-repeat;
+            height: 550px;
+            background-size: cover;
+        `
+    )
+
+    .container
+        .courses.mt-5 
+            .row
+                h4.fw-bold.mb-3 Khóa học mới nhất
+                each course in courses
+                    +course(course)
+
+        .blogs.mt-5 
+            .row 
+                h4.fw-bold.mb-3 Bài viết mới nhất
+                each blog in blogs 
+                    +blog(blog)
+
+                    

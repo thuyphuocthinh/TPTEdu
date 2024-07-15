@@ -85,12 +85,21 @@
                         .fa-solid.fa-gauge
                     span Users
 
+    if(role.permissions.includes("interfaces/carousels-view"))
+        .sider__group 
+            p.sider__title Giao diện
+            .sider-block
+                a(href=`${prefixAdmin}/interfaces/carousels` class="sider__item")  
+                    span
+                        .fa-solid.fa-gauge
+                    span Carousels
+
     if(role.permissions.includes("settings-view"))
         .sider__group 
             p.sider__title Cài đặt chung
 
             .sider-block
-                a(href="" class="sider__item")  
+                a(href=`${prefixAdmin}/general-settings/edit` class="sider__item")  
                     span
                         .fa-solid.fa-gauge
                     span Cài đặt chung

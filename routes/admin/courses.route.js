@@ -8,7 +8,11 @@ const upload = multer();
 const requestMiddleware = require("../../middlewares/admin/requestMiddleware");
 
 router.get("/", requestMiddleware.getReq("courses"), controller.index);
-router.get("/create", requestMiddleware.getReq("courses"), controller.getCreate);
+router.get(
+  "/create",
+  requestMiddleware.getReq("courses"),
+  controller.getCreate
+);
 router.post(
   "/create",
   requestMiddleware.postReq("courses"),
@@ -16,7 +20,11 @@ router.post(
   uploadToCloudinary,
   controller.postCreate
 );
-router.get("/edit/:id", requestMiddleware.getReq, controller.getEdit);
+router.get(
+  "/edit/:id",
+  requestMiddleware.getReq("courses"),
+  controller.getEdit
+);
 router.patch(
   "/edit/:id",
   requestMiddleware.patchReq("courses"),
@@ -24,8 +32,16 @@ router.patch(
   uploadToCloudinary,
   controller.patchEdit
 );
-router.get("/detail/:id", requestMiddleware.getReq("courses"), controller.getDetail);
-router.get("/delete/:id", requestMiddleware.getReq("courses"), controller.deleteItem);
+router.get(
+  "/detail/:id",
+  requestMiddleware.getReq("courses"),
+  controller.getDetail
+);
+router.get(
+  "/delete/:id",
+  requestMiddleware.getReq("courses"),
+  controller.deleteItem
+);
 router.get(
   "/updateStatus/:id/:status",
   requestMiddleware.getReq("courses"),

@@ -274,3 +274,22 @@ Validator({
     Validator.isPassword("#password", 8),
   ],
 });
+
+Validator({
+  form: "#form-edit-settings",
+  rules: [
+    Validator.isRequired("#email"),
+    Validator.isEmail("#email"),
+    Validator.isRequired("#phone"),
+    Validator.isRequired("#address"),
+    Validator.isRequired("#name"),
+    Validator.isRequired("#logo"),
+  ],
+});
+
+Validator({
+  form: "#form-create-carousels",
+  rules: [
+    Validator.isRequired("#image")
+  ],
+});

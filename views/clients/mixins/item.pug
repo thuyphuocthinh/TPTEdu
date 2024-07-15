@@ -1,0 +1,24 @@
+mixin course(course)
+    .col-lg-3.col-md-6.col-12.mb-lg-0.mb-4
+        .card
+            img.card-img-top(src=course.thumbnail alt=course.title style="width: 100%; height: 200px;")
+            .card-body
+                h6.fw-bold.card-title #{course.title}
+                p.m-0.p-0.d-flex.justify-content-between 
+                    span Giá cũ
+                    span.old__price #{course.price}$
+                p.m-0.p-0.d-flex.justify-content-between 
+                    span Giá mới
+                    span.fw-bold #{course.newPrice}$
+            .card-footer
+                a.btn.btn-secondary(href='#' class="me-2") Chi tiết
+                a.btn.btn-primary(href='#') Thêm giỏ hàng
+
+mixin blog(blog)
+    .col-lg-3.col-md-6.col-12.mb-lg-0.mb-4
+        .card
+            img.card-img-top(src=blog.thumbnail alt=blog.title style="width: 100%; height: 200px;")
+            .card-body
+                h6.fw-bold.card-title #{blog.title}
+            .card-footer
+                a.btn.btn-secondary(href='#' class="me-2") Chi tiết

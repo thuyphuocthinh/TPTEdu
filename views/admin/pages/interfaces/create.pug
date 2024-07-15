@@ -1,0 +1,36 @@
+extends ../../layouts/defaultLayout.pug
+include ../../mixins/box-head.pug 
+include ../../mixins/image-upload.pug 
+include ../../mixins/alert.pug 
+include ../../mixins/tree.pug 
+
+block main 
+    if(role.permissions.includes("interfaces/carousels-add"))
+        .main 
+            +box-head(pageTitle)
+            include ../../partials/require.pug
+
+            +alertSuccess(3000)
+
+            form(
+                action=`${prefixAdmin}/interfaces/carousels/create`
+                method="POST"
+                enctype="multipart/form-data"
+                id="form-create-carousels"
+            )
+                .row.my-3 
+                    .col-md-2.col-12
+                        +image-upload("image")
+                    .col-md-10.col-12
+                        .preview-image
+
+                .my-3 
+                    button(type="submit" class="btn btn-secondary" btn-create) Tạo mới
+
+        script(src="/public/admin/js/upload-image.js") 
+        script(src="/public/admin/js/validator.js") 
+
+
+
+        
+

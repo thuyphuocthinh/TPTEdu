@@ -4,7 +4,6 @@ const getReq = (route) => {
   return (req, res, next) => {
     const role = res.locals.role;
     const permissions = role.permissions.join(",");
-    console.log(permissions);
     if (
       permissions.includes(`${route}-view`) ||
       permissions.includes(`${route}-edit`) ||

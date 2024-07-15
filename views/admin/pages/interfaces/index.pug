@@ -1,0 +1,46 @@
+extends ../../layouts/defaultLayout.pug
+include ../../mixins/box-head.pug 
+include ../../mixins/alert.pug 
+include ../../mixins/modal.pug
+
+block main 
+    if(role.permissions.includes("interfaces/carousels-view"))
+        .main 
+            +box-head(pageTitle)
+
+            +alertSuccess("3000")
+            +alertError("3000")
+
+            if(role.permissions.includes("interfaces/carousels-add"))
+                .card.my-4
+                    .card-header.fw-bold Thêm, sửa, cập nhật
+                    .card-body.card-crud.d-flex.justify-content-end                
+                        a(href=`${prefixAdmin}/interfaces/carousels/create` class="btn btn-secondary") 
+                            .fa-solid.fa-plus.me-2 
+                            span Thêm mới 
+
+            .card.my-4
+                .card-header.fw-bold Danh sách carousels
+                .card-body
+                    if (carousels.length > 0) 
+                        table.table.table-hover
+                            thead
+                                tr.text-center
+                                    th(scope='col') STT
+                                    th(scope='col') Ảnh 
+                                    th(scope='col') Actions
+                            
+                            tbody
+                                each carousel in carousels 
+                                    tr.text-center.align-middle 
+                                        td #{carousel.index}
+                                        td 
+                                            img(src=carousel.image, alt=carousel.image, style="width: 400px; height: 200px;")
+                                        if(role.permissions.includes("interfaces/carousels-delete"))
+                                            td 
+                                                button(type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target=`#${carousel.slug}`) Xóa
+                                                +modal(carousel.slug, carousel.id, carousel.slug, "carousel", "interfaces/carousels")  
+                                        
+                    else 
+                        tr(col-span="8") Chưa có carousel nào
+

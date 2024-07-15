@@ -1,0 +1,5 @@
+mixin carousels(images)
+    #myCarousel.owl-carousel.owl-theme
+        each image in images
+            .item 
+                img(src=image.image, alt=image.image)

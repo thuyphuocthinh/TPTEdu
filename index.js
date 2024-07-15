@@ -32,6 +32,11 @@ app.use(methodOverride("_method"));
 
 // body-parser
 app.use(bodyParser.urlencoded({ extended: true }));
+// TinyMCE
+app.use(
+  "/tinymce",
+  express.static(path.join(__dirname, "node_modules", "tinymce"))
+);
 
 // routes
 adminRoute(app);
@@ -44,11 +49,7 @@ app.get("*", (req, res) => {
 app.set("views", `${__dirname}/views`);
 app.set("view engine", "pug");
 
-// TinyMCE
-app.use(
-  "/tinymce",
-  express.static(path.join(__dirname, "node_modules", "tinymce"))
-);
+
 
 const port = process.env.PORT || 5000;
 app.listen(port, () => {

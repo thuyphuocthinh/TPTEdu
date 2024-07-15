@@ -1,0 +1,39 @@
+.header 
+    .header__top
+        a(href="/" class="header__logo") TPT-edu
+        .header__search.d-md-block.d-none
+            form.d-flex(role='search')
+                input.form-control.me-2(type='search' placeholder='Tìm kiếm sản phẩm'  aria-label='Search')
+                button.btn.btn-secondary(type='submit') 
+                    span(class="fa-solid fa-magnifying-glass")
+        .header__right 
+            .header__minicart
+                span.header__buttons
+                    i.fa-solid.fa-cart-shopping
+                .header__dropdown.hidden 
+                    ul.header__list
+                        li Empty
+                        a(href="#" class="btn btn-primary d-block") Tiến hành thanh toán 
+            .header__user 
+                span.header__buttons 
+                    i.fa-solid.fa-user
+                    i.ms-2.fa-solid.fa-caret-down
+                .header__dropdown.hidden 
+                    ul.header__list 
+                        li  
+                            a(href="#" class="btn btn-primary d-block") Đăng nhập 
+    .header__bottom 
+        .header__list 
+            li.header__item 
+                a(href="#" class="header__link") Tất cả khóa học 
+            li.header__item 
+                a(href="#" class="header__link") Khóa học theo danh mục 
+            li.header__item 
+                a(href="#" class="header__link") Blogs 
+            li.header__item 
+                a(href="#" class="header__link") Blogs theo danh mục 
+
+
+
+
+            

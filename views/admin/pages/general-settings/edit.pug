@@ -1,0 +1,67 @@
+extends ../../layouts/defaultLayout.pug
+include ../../mixins/box-head.pug 
+include ../../mixins/image-upload.pug 
+include ../../mixins/alert.pug 
+include ../../mixins/tree.pug 
+
+block main
+    if(role.permissions.includes("settings-edit"))
+        .main 
+            +box-head(pageTitle)
+            include ../../partials/require.pug
+            +alertError("3000")
+
+            form(
+                action=`${prefixAdmin}/general-settings/edit?_method=PATCH`
+                method="POST"
+                enctype="multipart/form-data"
+                id="form-edit-settings"
+            )
+                .row.my-3
+                    .col-md-6.col-12 
+                        .form-group     
+                            label(for="name" class="fw-bold") Tên công ty *
+                            input(type="text" name="name" id="name" value=settings.name class="form-control") 
+                            p.error-msg
+                   
+                .row.my-3 
+                    .col-md-2.col-12
+                        +image-upload("logo")
+                    .col-md-10.col-12
+                        if(settings.logo)
+                            .preview-image
+                                img(src=settings.logo, alt=settings.logo, style="width: 200px; height: 200px;" class="img-thumbnail")
+                        else 
+                            .preview-image
+
+                .row.my-3 
+                    .col-md-6.col-12 
+                        .form-group     
+                            label(for="email" class="fw-bold") Email *
+                            input(type="text" name="email" id="email" value=settings.email class="form-control") 
+                            p.error-msg 
+
+                .row.my-3 
+                    .col-md-6.col-12 
+                        .form-group     
+                            label(for="phone" class="fw-bold") Số điện thoại *
+                            input(type="text" name="phone" id="phone" value=settings.phone class="form-control") 
+                            p.error-msg     
+
+                .row.my-3 
+                    .col-md-6.col-12 
+                        .form-group     
+                            label(for="address" class="fw-bold") Địa chỉ *
+                            input(type="text" name="address" id="address" value=settings.address class="form-control") 
+                            p.error-msg              
+
+                .my-3 
+                    button(type="submit" class="btn btn-secondary" btn-create) Cập nhật
+
+        script(src="/public/admin/js/upload-image.js") 
+        script(src="/public/admin/js/validator.js") 
+
+
+
+        
+
