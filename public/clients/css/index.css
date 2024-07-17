@@ -27,9 +27,6 @@ body {
     color: #000;
 }
 
-.header__top a {
-    color: #000;
-}
 
 .header__logo {
     font-weight: bold;
@@ -55,6 +52,17 @@ body {
 .header__minicart .header__list,
 .header__user .header__list {
     padding: 1rem .5rem;
+}
+
+.header__buttons {
+    position: relative;
+}
+
+.cart__quantity {
+    position: absolute;
+    right: -13px;
+    top: -10px;
+    border-radius: 50%;
 }
 
 .header__buttons:hover {
@@ -115,6 +123,36 @@ body {
 
 .header__bottom>.header__list>.header__item>a:hover {
     background-color: #6c6c6c;
+}
+
+.cart__item {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    border-radius: 10px;
+    padding: 10px;
+}
+
+.cart__item>img {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+}
+
+.cart__item:hover {
+    background-color: #d7d7d7;
+}
+
+.cart__item p {
+    padding: 0;
+    margin: 0;
+}
+
+.cart__item > .cart__info {
+    flex-grow: 1;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 @media screen and (max-width: 600px) {
@@ -209,7 +247,8 @@ body {
     box-shadow: 2px 2px 8px 0 rgba(0, 0, 0, .2);
 }
 
-.relatedCourse {
+.relatedCourse,
+.relatedBlog {
     display: flex;
     align-items: center;
     gap: 10px;
@@ -219,17 +258,20 @@ body {
     background-color: #fff;
 }
 
-.relatedCourse:hover {
+.relatedCourse:hover,
+.relatedBlog:hover {
     background-color: #d7d7d7;
 }
 
-.relatedCourse img {
+.relatedCourse img,
+.relatedBlog img {
     border-radius: 50%;
     width: 50px;
     height: 50px;
 }
 
-.relatedCourse p {
+.relatedCourse p,
+.relatedBlog p {
     color: #000;
     margin: 0;
     padding: 0;

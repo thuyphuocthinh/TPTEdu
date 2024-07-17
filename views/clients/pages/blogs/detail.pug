@@ -1,0 +1,27 @@
+extends ../../layouts/defaultLayout.pug 
+include ../../mixins/item.pug
+
+block main 
+    .container
+        .row.mt-5
+            .col-md-8.col-12
+                .blog__detail 
+                    .blog__thumbnail 
+                        img(
+                            src=blog.thumbnail
+                            alt=blog.thumbnail
+                            class="img-thumbnail" 
+                            style="width: 100%; height: 400px;"
+                        )
+
+                    .blog__content.mt-4 
+                        div !{blog.content}
+
+            .col-md-4.col-12 
+                h5.mb-4 Bài viết liên quan
+                each blog in relatedBlogs 
+                    +relatedBlog(blog) 
+
+
+
+                    

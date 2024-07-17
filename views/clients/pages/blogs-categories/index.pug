@@ -1,0 +1,33 @@
+extends ../../layouts/defaultLayout.pug 
+include ../../mixins/item.pug
+include ../../mixins/pagination.pug
+include ../../mixins/sort.pug
+include ../../mixins/categoriesTree.pug
+
+block main 
+    .container
+        .courses.mt-5 
+            .row
+                .col-md-3.col-12 
+                    h5.fw-bold Danh mục 
+                    ul.categories__list.mt-md-5.mt-2 
+                        +categoriesTreeBlogs(categories)
+                    
+                .col-md-9.col-12
+                    .heading.d-flex.flex-column.flex-md-row.mb-3.justify-content-between
+                        h4.fw-bold=pageTitle
+                        +sort(sort, sortedBy)
+                    
+                    if(blogs.length > 0)
+                        .row.mt-5
+                            each blog in blogs
+                                .col-lg-4.col-md-6.col-12.mb-3
+                                    +blog(blog)
+                        +pagination(pagination)
+                    else 
+                        h6.mt-5.text-center Hiện danh mục không có bài viết nào 
+
+    script(src="/public/clients/js/pagination.js") 
+    script(src="/public/clients/js/sort.js") 
+
+                    

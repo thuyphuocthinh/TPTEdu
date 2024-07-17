@@ -1,0 +1,64 @@
+extends ../../layouts/defaultLayout.pug 
+
+block main 
+    .container
+        .carts.mt-5
+            h4.text-center=pageTitle
+            if (cart) 
+                .row 
+                    .col-md-8.col-12
+                        .card.my-4
+                            .card-header.fw-bold Danh sách giỏ hàng
+                            .card-body            
+                                table.table.table-hover
+                                    thead
+                                        tr.text-center
+                                            th(scope='col') STT
+                                            th(scope='col') Tên khóa học 
+                                            th(scope='col') Số lượng 
+                                            th(scope='col') Giá
+                                            th(scope='col') Tổng tiền
+                                    
+                                    tbody
+                                        each item in cart.courses 
+                                            tr.text-center.align-middle
+                                                td #{item.index}
+                                                td 
+                                                    a(href=`/courses/${item.course.slug}`) #{item.course.title}
+                                                td #{item.quantity}
+                                                td #{item.course.newPrice} $
+                                                td #{item.cost} $
+
+                        .card
+                            .card-header.fw-bold Thông tin người dùng 
+                            .card-body 
+                                form(
+                                    action=""
+                                    method="post"
+                                    style="width: 70%;"
+                                    class="mx-auto"
+                                )
+                                    .form-group.mb-3 
+                                        label(for="email") Email
+                                        input(type="email" id="email" name="email" class="form-control") 
+                                    .form-group.mb-3 
+                                        label(for="address") Địa chỉ
+                                        input(type="text" id="address" name="address" class="form-control") 
+                                    .form-group 
+                                        label(for="phone") Số điện thoại
+                                        input(type="text" id="phone" name="phone" class="form-control")
+                                        
+                    .col-md-4.col-12
+                        .card.my-4 
+                            .card-header.fw-bold Cộng giỏ hàng 
+                            .card-body 
+                                p.d-flex.align-items-center.justify-content-between  
+                                    span.fw-bold Tổng 
+                                    span #{cart.totalCost} $
+                            .card-footer 
+                                .d-flex.justify-content-end 
+                                    a(href="#" class="btn btn-primary") Thanh toán    
+
+                          
+                        
+                    

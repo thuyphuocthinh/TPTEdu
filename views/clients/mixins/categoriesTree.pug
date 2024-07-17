@@ -5,3 +5,11 @@ mixin categoriesTree(categories, level = 0)
             a(href=`/courses-categories/${item.slug}` class="category__link")  #{prefix}#{item.title}
         if (item.children && item.children.length > 0)
             +categoriesTree(item.children, level + 1)
+
+mixin categoriesTreeBlogs(categories, level = 0)
+    each item in categories 
+        - const prefix = Array(level + 1).join("-- ")
+        li.category__item 
+            a(href=`/blogs-categories/${item.slug}` class="category__link")  #{prefix}#{item.title}
+        if (item.children && item.children.length > 0)
+            +categoriesTreeBlogs(item.children, level + 1)

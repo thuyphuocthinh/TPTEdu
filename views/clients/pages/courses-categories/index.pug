@@ -35,7 +35,7 @@ block main
                                             span.fw-bold #{course.newPrice}$
                                     .card-footer
                                         a.btn.btn-secondary(href=`/courses/${course.slug}` class="me-2") Chi tiết
-                                        a.btn.btn-primary(href='#') Thêm giỏ hàng
+                                        a.btn.btn-primary(href=`/carts/add/${course.id}`) Thêm giỏ hàng
                     +pagination(pagination)
 
     script(src="/public/clients/js/pagination.js") 

@@ -9,11 +9,36 @@
         .header__right 
             .header__minicart
                 span.header__buttons
+                    if (miniCart) 
+                        if(miniCart.totalQuantity > 0)
+                            span.cart__quantity.badge.bg-primary #{miniCart.totalQuantity}
+                        else 
+                            span.cart__quantity.badge.bg-primary 0
+                    else 
+                        span.cart__quantity.badge.bg-primary 0
                     i.fa-solid.fa-cart-shopping
+
                 .header__dropdown.hidden 
-                    ul.header__list
-                        li Empty
-                        a(href="#" class="btn btn-primary d-block") Tiến hành thanh toán 
+                    if(miniCart)
+                        if(miniCart.totalQuantity > 0)
+                            ul.header__list
+                                li.text-center 
+                                    each item in miniCart.courses 
+                                        a(href=`/courses/${item.course.slug}` class="d-block p-0")
+                                            .cart__item 
+                                                img(src=item.course.thumbnail, alt=item.course.title)
+                                                .cart__info 
+                                                    p #{item.course.title}
+                                                    span.badge.bg-success x#{item.quantity}
+                                a(href="/carts" class="btn btn-primary d-block mt-3") Xem giỏ hàng 
+                        else 
+                            ul.header__list
+                                li.text-center Empty
+                                a(href="/carts" class="btn btn-primary d-block mt-3") Xem giỏ hàng
+                    else 
+                        ul.header__list
+                            li.text-center Not Empty
+
             .header__user 
                 span.header__buttons 
                     i.fa-solid.fa-user
@@ -31,9 +56,9 @@
             li.header__item 
                 a(href="/courses-categories" class="header__link") Khóa học theo danh mục 
             li.header__item 
-                a(href="#" class="header__link") Blogs 
+                a(href="/blogs" class="header__link") Blogs 
             li.header__item 
-                a(href="#" class="header__link") Blogs theo danh mục 
+                a(href="/blogs-categories" class="header__link") Blogs theo danh mục 
 
 
 

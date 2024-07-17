@@ -1,0 +1,70 @@
+extends ../../layouts/defaultLayout.pug 
+
+block main 
+    .container
+        .carts.mt-5
+            h4.text-center=pageTitle
+            if (cart) 
+                .row 
+                    .col-md-8.col-12
+                        .card.my-4
+                            .card-header.fw-bold Danh sách giỏ hàng
+                            .card-body            
+                                table.table.table-hover
+                                    thead
+                                        tr.text-center
+                                            th(scope='col') STT
+                                            th(scope='col') Tên khóa học 
+                                            th(scope='col') Số lượng 
+                                            th(scope='col') Giá
+                                            th(scope='col') Tổng tiền
+                                            th(scope='col') Actions
+                                    
+                                    tbody
+                                        each item in cart.courses 
+                                            tr.text-center.align-middle
+                                                td #{item.index}
+                                                td 
+                                                    a(href=`/courses/${item.course.slug}`) #{item.course.title}
+                                                td 
+                                                    input(
+                                                        type="number" 
+                                                        min="0" 
+                                                        value=item.quantity 
+                                                        name="quantity"
+                                                        class="form-control mx-auto" 
+                                                        style="width: 50px;"
+                                                        form-input-quantity=item.course_id
+                                                    )
+                                                td #{item.course.newPrice} $
+                                                td #{item.cost} $
+                                                td 
+                                                    a(href=`/carts/delete/${item.course_id}` class="btn btn-danger") Xóa
+                            .card-footer
+                                form(
+                                    action="/carts/updateQuantity"
+                                    method="POST"
+                                    style="display: none;"
+                                    form-update-quantity
+                                )         
+                                    input(type="text" name="updatedObj")     
+                                button(type="button" button-update-quantity class="btn btn-secondary") Cập nhật số lượng 
+                                
+                    .col-md-4.col-12
+                        .card.my-4 
+                            .card-header.fw-bold Cộng giỏ hàng 
+                            .card-body 
+                                p.d-flex.align-items-center.justify-content-between 
+                                    span.fw-bold Tạm tính 
+                                    span #{cart.totalCost} $
+                                p.d-flex.align-items-center.justify-content-between  
+                                    span.fw-bold Tổng 
+                                    span #{cart.totalCost} $
+                            .card-footer 
+                                .d-flex.justify-content-end 
+                                    a(href="/checkout" class="btn btn-primary") Tiến hành thanh toán    
+            else 
+                tr(col-span="8") Giỏ hàng trống
+    script(src="/public/clients/js/updateQuantity.js") 
+                
+                    

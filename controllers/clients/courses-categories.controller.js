@@ -105,7 +105,7 @@ const getBySlug = async (req, res) => {
     const page = parseInt(req.query.page);
     const settings = await Settings.findOne({ deleted: false });
     const slug = req.params.slug;
-    
+
     const category = await CoursesCategories.findOne({
       slug: slug,
       deleted: false,

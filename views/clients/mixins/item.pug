@@ -13,7 +13,7 @@ mixin course(course)
                 span.fw-bold #{course.newPrice}$
         .card-footer
             a.btn.btn-secondary(href=`/courses/${course.slug}` class="me-2") Chi tiết
-            a.btn.btn-primary(href='#') Thêm giỏ hàng
+            a.btn.btn-primary(href=`/carts/add/${course.id}`) Thêm giỏ hàng
 
 mixin blog(blog)
     .card.item
@@ -21,10 +21,16 @@ mixin blog(blog)
         .card-body
             h6.fw-bold.card-title(style="height: 40px;") #{blog.title}
         .card-footer
-            a.btn.btn-secondary(href='#' class="me-2") Chi tiết
+            a.btn.btn-secondary(href=`/blogs/${blog.slug}` class="me-2") Chi tiết
 
 mixin relatedCourse(course)
     a(href=`/courses/${course.slug}` class="d-block mb-3") 
         .relatedCourse
             img(src=course.thumbnail, alt=course.thumbnail)
             p.fw-bold #{course.title}
+
+mixin relatedBlog(blog)
+    a(href=`/blogs/${blog.slug}` class="d-block mb-3")
+        .relatedBlog 
+            img(src=blog.thumbnail, alt=blog.thumbnail)
+            p.fw-bold #{blog.title} 
