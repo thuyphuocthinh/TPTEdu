@@ -1,0 +1,105 @@
+extends ../../layouts/defaultLayout.pug
+include ../../mixins/box-head.pug
+
+block main 
+    if(role.permissions.includes("dashboard-view"))
+        .main 
+            +box-head(pageTitle)
+            .row.mt-4 
+                .col-md-6.col-12.mb-4 
+                    .card 
+                        .card-header.fw-bold Đơn hàng
+                        .card-body 
+                            p.d-flex.align-items-center.justify-content-between 
+                                span.fw-bold Tổng
+                                span #{statistic.orders.total}
+                            p.d-flex.align-items-center.justify-content-between 
+                                span.fw-bold Đã duyệt
+                                span #{statistic.orders.approved}
+                            p.d-flex.align-items-center.justify-content-between 
+                                span.fw-bold Chưa duyệt
+                                span #{statistic.orders.pending}
+
+                .col-md-6.col-12.mb-4 
+                    .card 
+                        .card-header.fw-bold Khóa học
+                        .card-body 
+                            p.d-flex.align-items-center.justify-content-between 
+                                span.fw-bold Tổng
+                                span #{statistic.courses.total}
+                            p.d-flex.align-items-center.justify-content-between 
+                                span.fw-bold Hoạt động
+                                span #{statistic.courses.active}
+                            p.d-flex.align-items-center.justify-content-between 
+                                span.fw-bold Ngưng hoạt động
+                                span #{statistic.courses.inactive}
+                
+                .col-md-6.col-12.mb-4 
+                    .card 
+                        .card-header.fw-bold Danh mục khóa học
+                        .card-body 
+                            p.d-flex.align-items-center.justify-content-between 
+                                span.fw-bold Tổng
+                                span #{statistic.coursesCategories.total}
+                            p.d-flex.align-items-center.justify-content-between 
+                                span.fw-bold Hoạt động
+                                span #{statistic.coursesCategories.active}
+                            p.d-flex.align-items-center.justify-content-between 
+                                span.fw-bold Ngưng hoạt động
+                                span #{statistic.coursesCategories.inactive}
+                
+                .col-md-6.col-12.mb-4 
+                    .card 
+                        .card-header.fw-bold Blogs 
+                        .card-body 
+                            p.d-flex.align-items-center.justify-content-between 
+                                span.fw-bold Tổng
+                                span #{statistic.blogs.total}
+                            p.d-flex.align-items-center.justify-content-between 
+                                span.fw-bold Hoạt động
+                                span #{statistic.blogs.active}
+                            p.d-flex.align-items-center.justify-content-between 
+                                span.fw-bold Ngưng hoạt động
+                                span #{statistic.blogs.inactive}
+
+                .col-md-6.col-12.mb-4 
+                    .card 
+                        .card-header.fw-bold Danh mục blogs
+                        .card-body 
+                            p.d-flex.align-items-center.justify-content-between 
+                                span.fw-bold Tổng
+                                span #{statistic.blogsCategories.total}
+                            p.d-flex.align-items-center.justify-content-between 
+                                span.fw-bold Hoạt động
+                                span #{statistic.blogsCategories.active}
+                            p.d-flex.align-items-center.justify-content-between 
+                                span.fw-bold Ngưng hoạt động
+                                span #{statistic.blogsCategories.inactive}
+
+                .col-md-6.col-12.mb-4 
+                    .card 
+                        .card-header.fw-bold Users
+                        .card-body 
+                            p.d-flex.align-items-center.justify-content-between 
+                                span.fw-bold Tổng
+                                span #{statistic.users.total}
+                            p.d-flex.align-items-center.justify-content-between 
+                                span.fw-bold Hoạt động
+                                span #{statistic.users.active}
+                            p.d-flex.align-items-center.justify-content-between 
+                                span.fw-bold Ngưng hoạt động
+                                span #{statistic.users.inactive}
+
+                .col-md-6.col-12.mb-4 
+                    .card 
+                        .card-header.fw-bold Accounts
+                        .card-body 
+                            p.d-flex.align-items-center.justify-content-between 
+                                span.fw-bold Tổng
+                                span #{statistic.accounts.total}
+                            p.d-flex.align-items-center.justify-content-between 
+                                span.fw-bold Hoạt động
+                                span #{statistic.accounts.active}
+                            p.d-flex.align-items-center.justify-content-between 
+                                span.fw-bold Ngưng hoạt động
+                                span #{statistic.accounts.inactive}

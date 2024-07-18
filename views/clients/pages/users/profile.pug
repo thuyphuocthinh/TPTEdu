@@ -2,6 +2,7 @@ extends ../../layouts/defaultLayout.pug
 include ../../mixins/alert.pug 
 
 block main 
+    +alertSuccess("3000")
     .container 
         h4.my-4 Tài khoản
         .row 
@@ -10,7 +11,7 @@ block main
             
             .col-md-9.col-12
                 form(
-                    action="/users/login"
+                    action="/users/profile?_method=PATCH"
                     method="post"
                     id="form-update-profile"
                     style="width: 80%;"
@@ -22,19 +23,30 @@ block main
                     .mb-1.row.form-group
                         label.col-12.col-form-label.fw-bold(for='email') Email
                         .col-12
-                            input(class="form-control" type='email' value=user.email name="email" id="email" placeholder="Nhập email")
+                            input(class="form-control" type='email' readonly 
+                            disabled=true 
+                            value=user.email 
+                            name="email" 
+                            id="email" 
+                            placeholder="Nhập email"
+                        )
                     .mb-1.row.form-group
                         label.col-12.col-form-label.fw-bold(for='fullName') Họ tên
                         .col-12
-                            input(class="form-control" type='text' name="fullName" id="fullName" placeholder="Nhập họ tên")
+                            input(class="form-control" type='text' 
+                            value=user.fullName 
+                            name="fullName" 
+                            id="fullName" 
+                            placeholder="Nhập họ tên"
+                        )
                     .mb-1.row.form-group
                         label.col-12.col-form-label.fw-bold(for='address') Địa chỉ
                         .col-12
-                            input(class="form-control" type='text' name="address" id="address" placeholder="Nhập địa chỉ")
+                            input(class="form-control" type='text' value=user.address name="address" id="address" placeholder="Nhập địa chỉ")
                     .mb-1.row.form-group
                         label.col-12.col-form-label.fw-bold(for='phone') Số điện thoại 
                         .col-12
-                            input(class="form-control" type='text' name="phone" id="phone" placeholder="Nhập số điện thoại")
+                            input(class="form-control" type='text' name="phone" value=user.phone id="phone" placeholder="Nhập số điện thoại")
                     .row.mt-3.form-group.px-2 
                         button.btn.btn-primary(type='submit' style="width: 200px;") Lưu thay đổi
                     

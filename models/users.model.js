@@ -16,7 +16,7 @@ const usersSchema = new mongoose.Schema(
     },
     status: {
       type: String,
-      default: "Active",
+      default: "active",
     },
     deleted: {
       type: Boolean,

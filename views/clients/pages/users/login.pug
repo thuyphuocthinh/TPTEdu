@@ -3,6 +3,7 @@ include ../../mixins/alert.pug
 
 block main 
     +alertError("3000")
+    +alertSuccess("3000")
     
     form(
         action="/users/login"
@@ -19,7 +20,10 @@ block main
             label.col-12.col-form-label.fw-bold(for='password') Password
             .col-12
                 input(class="form-control" type='password' name="password" id="password" placeholder="Nhập password")
-            p.error-msg 
+            p.error-msg
+        .mb-1.row 
+            .d-flex.justify-content-end
+                a(href="/users/forgotPassword") ?? Quên mật khẩu
         .mb-1.row.px-2
             .col-12.col-form-label
             button(type="submit" class="btn btn-primary" style="width: 100%;") Đăng nhập

@@ -2,6 +2,7 @@ const Carts = require("../../models/carts.model");
 const Settings = require("../../models/general-settings.model");
 const Courses = require("../../models/courses.model");
 const Orders = require("../../models/orders.model");
+const Users = require("../../models/users.model");
 const { newPrice } = require("../../helpers/price");
 
 const index = async (req, res) => {
@@ -44,6 +45,11 @@ const order = async (req, res) => {
       item.price = course.price;
     }
 
+    if (req.cookies.tokenUser) {
+      const user = await Users.findOne({ tokenUser: req.cookies.tokenUser });
+      order.user_id = user.id;
+    }
+
     const newOrder = new Orders(order);
     await newOrder.save();
 
@@ -55,6 +61,7 @@ const order = async (req, res) => {
         courses: [],
       }
     );
+    
     res.clearCookie("cartId");
 
     let totalCost = 0;

@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon --inspect index.js 5000",
+    "start": "nodemon --inspect index.js 3000",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
@@ -23,6 +23,7 @@
     "mongoose": "^8.4.5",
     "mongoose-slug-updater": "^3.3.0",
     "multer": "^1.4.5-lts.1",
+    "nodemailer": "^6.9.14",
     "pug": "^3.0.3",
     "sass": "^1.77.6",
     "streamifier": "^0.1.1",

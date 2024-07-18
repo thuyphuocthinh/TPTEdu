@@ -319,7 +319,10 @@ body {
 
 /* form login */
 #form-login,
-#form-register {
+#form-register,
+#form-forgotPassword-email,
+#form-forgotPassword-otp,
+#form-forgotPassword-reset {
     max-width: 400px;
     width: 100%;
     margin: 2rem auto;

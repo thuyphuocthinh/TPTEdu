@@ -187,6 +187,7 @@ Validator({
     Validator.isRequired("#fullName"),
   ],
 });
+
 Validator({
   form: "#form-update-password",
   rules: [
@@ -196,6 +197,35 @@ Validator({
     Validator.isPassword("#oldPassword", 8),
     Validator.isPassword("#newPassword", 8),
     Validator.isPassword("#confirmNewPassword", 8),
-    Validator.isConfirmed("#confirmNewPassword", "#newPassword", "Mật khẩu mới không trùng khớp!"),
+    Validator.isConfirmed(
+      "#confirmNewPassword",
+      "#newPassword",
+      "Mật khẩu mới không trùng khớp!"
+    ),
+  ],
+});
+
+Validator({
+  form: "#form-forgotPassword-email",
+  rules: [Validator.isRequired("#email"), Validator.isEmail("#email")],
+});
+
+Validator({
+  form: "#form-forgotPassword-token",
+  rules: [Validator.isRequired("#token")],
+});
+
+Validator({
+  form: "#form-forgotPassword-reset",
+  rules: [
+    Validator.isRequired("#password"),
+    Validator.isPassword("#password", 8),
+    Validator.isRequired("#confirmPassword"),
+    Validator.isPassword("#confirmPassword", 8),
+    Validator.isConfirmed(
+      "#confirmPassword",
+      "#password",
+      "Mật khẩu mới không trùng khớp!"
+    ),
   ],
 });

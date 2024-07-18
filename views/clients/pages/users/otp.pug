@@ -1,0 +1,26 @@
+extends ../../layouts/defaultLayout.pug 
+include ../../mixins/alert.pug 
+
+block main 
+    +alertError("3000")
+    +alertSuccess("3000")
+    
+    form(
+        action="/users/otp"
+        method="post"
+        id="form-forgotPassword-otp"
+    ) 
+        h4.text-center.mb-2 Quên mật khẩu
+        .mb-1.row.form-group
+            label.col-12.col-form-label.fw-bold(for='otp') Mã OTP
+            .col-12
+                input(class="form-control" type='text' name="otp" id="otp" placeholder="Nhập mã otp")
+            p.error-msg 
+            p.my-2.alert.alert-danger Hiệu lực mã OTP chỉ có 3 phút
+            
+        .mb-1.row.px-2
+            .col-12.col-form-label
+            button(type="submit" class="btn btn-primary" style="width: 100%;") Gửi
+        
+    script(src="/public/clients/js/validator.js") 
+                    

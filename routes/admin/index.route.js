@@ -10,10 +10,14 @@ const permissionsRoutes = require("../../routes/admin/permissions.route");
 const errorRoutes = require("../../routes/admin/error.route");
 const settingsRoutes = require("../../routes/admin/general-settings.route");
 const interfacesRoutes = require("../../routes/admin/interfaces.route");
+const usersRoutes = require("../../routes/admin/users.route");
+const ordersRoutes = require("../../routes/admin/orders.route");
+const dashboardRoutes = require("../../routes/admin/dashboard.route");
 // middlewares
 const authMiddleware = require("../../middlewares/admin/authMiddleware");
 
 module.exports = (app) => {
+  app.use(`${prefixAdmin}/`, authMiddleware, dashboardRoutes);
   app.use(`${prefixAdmin}/courses`, authMiddleware, coursesRoutes);
   app.use(
     `${prefixAdmin}/courses-categories`,
@@ -31,6 +35,8 @@ module.exports = (app) => {
   app.use(`${prefixAdmin}/permissions`, authMiddleware, permissionsRoutes);
   app.use(`${prefixAdmin}/general-settings`, authMiddleware, settingsRoutes);
   app.use(`${prefixAdmin}/interfaces`, authMiddleware, interfacesRoutes);
+  app.use(`${prefixAdmin}/users`, authMiddleware, usersRoutes);
+  app.use(`${prefixAdmin}/orders`, authMiddleware, ordersRoutes);
   app.use(`${prefixAdmin}/auth`, authRoutes);
   app.use(`${prefixAdmin}/errors`, errorRoutes);
 };

@@ -1,0 +1,49 @@
+extends ../../layouts/defaultLayout.pug 
+
+block main 
+    .container
+        h4.my-4 Tài khoản
+        if (order) 
+            .row 
+                .col-md-3.col-12
+                    include ../../partials/profile-sider.pug
+        
+                .col-md-9.col-12
+                    h5(
+                        style="color: rgb(13,110,253);"
+                    ) #{pageTitle}
+                    .card.my-4
+                        .card-header.fw-bold Danh sách khóa học 
+                        .card-body            
+                            table.table.table-hover
+                                thead
+                                    tr.text-center
+                                        th(scope='col') Tên khóa học 
+                                        th(scope='col') Số lượng 
+                                        th(scope='col') Giá  
+                                        th(scope='col') Tổng tiền
+                                
+                                tbody
+                                    each item in order.courses 
+                                        tr.text-center.align-middle
+                                            td #{item.title}
+                                            td #{item.quantity}
+                                            td #{item.price} $
+                                            td #{item.cost} $
+                                    tr.text-center.align-middle 
+                                        td(colspan=3).fw-bold Tổng tiền 
+                                        td #{order.totalCost} $
+                                            
+        else 
+            .row
+                .col-md-3.col-12
+                    include ../../partials/profile-sider.pug
+            
+                .col-md-9.col-12
+                    h5(
+                        style="color: rgb(13,110,253);"
+                    ) #{pageTitle}
+                    p Chưa có đơn hàng nào
+                          
+                        
+                    

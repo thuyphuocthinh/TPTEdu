@@ -1,0 +1,33 @@
+extends ../../layouts/defaultLayout.pug
+include ../../mixins/box-head.pug 
+
+block main 
+    if(role.permissions.includes("orders-view"))
+        .main 
+            +box-head(pageTitle)
+                
+            if (order) 
+                .card.my-4
+                    .card-header.fw-bold Danh sách khóa học 
+                    .card-body            
+                        table.table.table-hover
+                            thead
+                                tr.text-center
+                                    th(scope='col') STT 
+                                    th(scope='col') Tên khóa học 
+                                    th(scope='col') Số lượng 
+                                    th(scope='col') Giá  
+                                    th(scope='col') Tổng tiền
+                            
+                            tbody
+                                each item in order.courses 
+                                    tr.text-center.align-middle
+                                        td #{item.index}
+                                        td #{item.title}
+                                        td #{item.quantity}
+                                        td #{item.price} $
+                                        td #{item.cost} $
+                                tr.text-center.align-middle 
+                                    td(colspan=4).fw-bold Tổng tiền 
+                                    td #{order.totalCost} $
+            

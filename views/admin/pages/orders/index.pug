@@ -1,0 +1,60 @@
+extends ../../layouts/defaultLayout.pug
+include ../../mixins/box-head.pug 
+include ../../mixins/alert.pug 
+include ../../mixins/status.pug 
+include ../../mixins/pagination.pug 
+include ../../mixins/search.pug 
+include ../../mixins/sort.pug 
+include ../../mixins/filterByStatus.pug 
+
+block main 
+    if(role.permissions.includes("orders-view"))
+        .main 
+            +box-head(pageTitle)
+
+            +alertSuccess("3000")
+
+            .card.my-4
+                .card-header.fw-bold Sắp xếp, lọc theo trạng thái
+                .card-body.card-sort-search
+                    +sort(sort, sortedBy)
+                    +filterByStatus(filterOptions, filterByStatus)
+                                
+            .card.my-4
+                .card-header.fw-bold Danh sách đơn hàng
+                .card-body
+                    if (orders.length > 0) 
+                        table.table.table-hover
+                            thead
+                                tr.text-center
+                                    th(scope='col') STT
+                                    th(scope='col') Mã đơn hàng
+                                    th(scope='col') Tổng tiền
+                                    th(scope='col') Status 
+                                    th(scope='col') Actions
+                            
+                            tbody
+                                each order in orders 
+                                    tr.text-center.align-middle   
+                                        td #{order.index}
+                                        td.fw-bold #{order.id}
+                                        td #{order.totalCost} $
+                                        td 
+                                            if(order.status === "Pending")
+                                                a(
+                                                    href=`${prefixAdmin}/orders/changeStatus/${order.id}/Approved` 
+                                                    class="badge bg-danger"
+                                                ) Chờ duyệt
+                                            else 
+                                                span.badge.bg-success Đã duyệt 
+                                        td 
+                                            a(href=`${prefixAdmin}/orders/detail/${order.id}` class="btn btn-primary me-2") Chi tiết 
+            
+                        +pagination(pagination)
+                    else 
+                        tr(col-span="8") Chưa có đơn hàng nào
+
+        script(src="/public/admin/js/search.js") 
+        script(src="/public/admin/js/pagination.js") 
+        script(src="/public/admin/js/sort.js") 
+        script(src="/public/admin/js/filterByStatus.js") 
