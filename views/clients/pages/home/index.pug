@@ -1,10 +1,12 @@
 extends ../../layouts/defaultLayout.pug 
 include ../../mixins/carousels.pug
 include ../../mixins/item.pug
+include ../../mixins/alert.pug
 
 block main 
     +carousels(carousels)
-
+    +alertSuccess("3000")
+    
     .container
         .courses.mt-5 
             .row

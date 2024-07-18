@@ -1,0 +1,53 @@
+[33mcommit 65116e9429212cbf23f1cab436798d8c10ddf1a6[m[33m ([m[1;36mHEAD -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m)[m
+Author: thuyphuocthinh <104757603+thuyphuocthinh@users.noreply.github.com>
+Date:   Wed Jul 17 17:49:43 2024 +0700
+
+    Added blogs, blogs-categories, cart operations
+
+[33mcommit f6083613f552d8f56f3f9d6fa6b4b0a13221781a[m
+Author: thuyphuocthinh <104757603+thuyphuocthinh@users.noreply.github.com>
+Date:   Mon Jul 15 23:32:23 2024 +0700
+
+    Added search courses
+
+[33mcommit 2f6e94cd6b380e19a33a2dee9baa1830d5bead83[m
+Author: thuyphuocthinh <104757603+thuyphuocthinh@users.noreply.github.com>
+Date:   Mon Jul 15 23:10:30 2024 +0700
+
+    Updated homepage, courses page, course-detail page, courses by categories page
+
+[33mcommit c829c47dadbb91d50304ac66c6d8c5c178e8c3ae[m
+Author: thuyphuocthinh <104757603+thuyphuocthinh@users.noreply.github.com>
+Date:   Mon Jul 15 11:23:41 2024 +0700
+
+    Added clients side
+
+[33mcommit 139f18fad28f8dd226c44ea7835f912ca670b09c[m
+Author: thuyphuocthinh <104757603+thuyphuocthinh@users.noreply.github.com>
+Date:   Sat Jul 13 16:31:55 2024 +0700
+
+    updated permissions
+
+[33mcommit 33e6a3db22f481097cb81fcc044188e77a900845[m
+Author: thuyphuocthinh <104757603+thuyphuocthinh@users.noreply.github.com>
+Date:   Sat Jul 13 11:09:34 2024 +0700
+
+    Added permissions function
+
+[33mcommit e43a3f4c9cd124126989e5ce9ff80f80a59a7552[m
+Author: thuyphuocthinh <104757603+thuyphuocthinh@users.noreply.github.com>
+Date:   Fri Jul 12 12:18:46 2024 +0700
+
+    Added auth middleware, auth route, login
+
+[33mcommit 5f4fac5e1f040d4139f6815f2797294b049b14b7[m
+Author: thuyphuocthinh <104757603+thuyphuocthinh@users.noreply.github.com>
+Date:   Thu Jul 11 21:40:48 2024 +0700
+
+    created tree category, added blogs, blogs-categories, roles
+
+[33mcommit adb787d5b669f2265a8c3026fc1b21e22e06c848[m[33m ([m[1;32mmaster[m[33m)[m
+Author: thuyphuocthinh <104757603+thuyphuocthinh@users.noreply.github.com>
+Date:   Wed Jul 10 11:16:09 2024 +0700
+
+    Created project, created db, added courses

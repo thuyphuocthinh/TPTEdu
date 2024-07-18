@@ -10,7 +10,7 @@ block main
                         .card.my-4
                             .card-header.fw-bold Danh sách giỏ hàng
                             .card-body            
-                                table.table.table-hover
+                                table.table.table-hover(cart-info=cart)
                                     thead
                                         tr.text-center
                                             th(scope='col') STT
@@ -33,20 +33,38 @@ block main
                             .card-header.fw-bold Thông tin người dùng 
                             .card-body 
                                 form(
-                                    action=""
-                                    method="post"
                                     style="width: 70%;"
                                     class="mx-auto"
-                                )
-                                    .form-group.mb-3 
-                                        label(for="email") Email
-                                        input(type="email" id="email" name="email" class="form-control") 
-                                    .form-group.mb-3 
-                                        label(for="address") Địa chỉ
-                                        input(type="text" id="address" name="address" class="form-control") 
-                                    .form-group 
-                                        label(for="phone") Số điện thoại
-                                        input(type="text" id="phone" name="phone" class="form-control")
+                                    id="form-user-order"
+                                )   
+                                    if(user) 
+                                        .form-group.mb-3 
+                                            label(for="email") Email
+                                            input(type="email" id="email" value=user.email name="email" class="form-control") 
+                                            p.error-msg
+                                        .form-group.mb-3 
+                                            label(for="address") Địa chỉ
+                                            input(type="text" id="address" value=user.address name="address" class="form-control") 
+                                            p.error-msg
+                                        .form-group 
+                                            label(for="phone") Số điện thoại
+                                            input(type="text" id="phone" name="phone" value=user.phone class="form-control")
+                                            p.error-msg
+                                    else 
+                                        .form-group.mb-3 
+                                            label(for="email") Email
+                                            input(type="email" id="email" name="email" class="form-control") 
+                                            p.error-msg
+                                        .form-group.mb-3 
+                                            label(for="address") Địa chỉ
+                                            input(type="text" id="address" name="address" class="form-control") 
+                                            p.error-msg
+                                        .form-group 
+                                            label(for="phone") Số điện thoại
+                                            input(type="text" id="phone" name="phone" class="form-control")
+                                            p.error-msg
+                                            
+                                    button(type="submit" style="display: none;" hidden-order-btn)  
                                         
                     .col-md-4.col-12
                         .card.my-4 
@@ -56,9 +74,18 @@ block main
                                     span.fw-bold Tổng 
                                     span #{cart.totalCost} $
                             .card-footer 
-                                .d-flex.justify-content-end 
-                                    a(href="#" class="btn btn-primary") Thanh toán    
-
+                                .d-flex.justify-content-end
+                                    form(
+                                        action="/checkout"
+                                        method="post"
+                                        form-order
+                                        style="display: none;"
+                                    )  
+                                        input(type="text" name="order" order-input)
+                                    button(class="btn btn-primary" order-btn) Thanh toán    
+    
+    script(src="/public/clients/js/validator.js") 
+    script(src="/public/clients/js/order.js") 
                           
                         
                     

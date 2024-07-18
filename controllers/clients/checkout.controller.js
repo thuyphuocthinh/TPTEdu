@@ -1,6 +1,7 @@
 const Carts = require("../../models/carts.model");
 const Settings = require("../../models/general-settings.model");
 const Courses = require("../../models/courses.model");
+const Orders = require("../../models/orders.model");
 const { newPrice } = require("../../helpers/price");
 
 const index = async (req, res) => {
@@ -32,6 +33,57 @@ const index = async (req, res) => {
   }
 };
 
+const order = async (req, res) => {
+  try {
+    const order = JSON.parse(req.body.order);
+    const settings = await Settings.findOne();
+
+    for (const item of order.courses) {
+      const course = await Courses.findOne({ _id: item.course_id });
+      item.discountPercentage = course.discountPercentage;
+      item.price = course.price;
+    }
+
+    const newOrder = new Orders(order);
+    await newOrder.save();
+
+    await Carts.updateOne(
+      {
+        _id: newOrder.cart_id,
+      },
+      {
+        courses: [],
+      }
+    );
+    res.clearCookie("cartId");
+
+    let totalCost = 0;
+    const result = await Orders.findOne({ _id: newOrder.id });
+    for (let i = 0; i < result.courses.length; i++) {
+      const item = result.courses[i];
+      let course = await Courses.findOne({ _id: item.course_id });
+      course = newPrice(course);
+      item.newPrice = course.newPrice;
+      item.discountPercentage = course.discountPercentage;
+      item.price = course.price;
+      item.title = course.title;
+      item.cost = course.newPrice * item.quantity;
+      item.index = i + 1;
+      totalCost += item.cost;
+    }
+    result.totalCost = totalCost;
+
+    res.render("clients/pages/checkout/result", {
+      pageTitle: "Đặt hàng thành công",
+      result,
+      settings,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 module.exports = {
   index,
+  order,
 };

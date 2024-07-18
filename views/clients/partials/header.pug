@@ -45,8 +45,15 @@
                     i.ms-2.fa-solid.fa-caret-down
                 .header__dropdown.hidden 
                     ul.header__list 
-                        li  
-                            a(href="#" class="btn btn-primary d-block") Đăng nhập 
+                        if (user)
+                            li.text-center.mb-3.fw-bold Xin chào, #{user.fullName} 
+                            li
+                                a(href="/users/profile" class="d-block" style="color: black;") Hồ sơ cá nhân 
+                            li 
+                                a(href="/users/logout" class="d-block" style="color: black;") Đăng xuất 
+                        else 
+                            li  
+                                a(href="/users/login" class="btn btn-primary d-block" style="color: white;") Đăng nhập 
     .header__bottom 
         .header__list 
             li.header__item 

@@ -1,0 +1,31 @@
+extends ../../layouts/defaultLayout.pug 
+include ../../mixins/alert.pug 
+
+block main 
+    +alertError("3000")
+    
+    form(
+        action="/users/login"
+        method="post"
+        id="form-login"
+    ) 
+        h4.text-center.mb-2 Đăng nhập
+        .mb-1.row.form-group
+            label.col-12.col-form-label.fw-bold(for='email') Email
+            .col-12
+                input(class="form-control" type='email' name="email" id="email" placeholder="Nhập email")
+            p.error-msg 
+        .mb-1.row.form-group
+            label.col-12.col-form-label.fw-bold(for='password') Password
+            .col-12
+                input(class="form-control" type='password' name="password" id="password" placeholder="Nhập password")
+            p.error-msg 
+        .mb-1.row.px-2
+            .col-12.col-form-label
+            button(type="submit" class="btn btn-primary" style="width: 100%;") Đăng nhập
+        
+        .mt-3.row
+            .d-flex.justify-content-end
+                a(href="/users/register") Đăng kí ngay nếu chưa có tài khoản 
+    script(src="/public/clients/js/validator.js") 
+                    

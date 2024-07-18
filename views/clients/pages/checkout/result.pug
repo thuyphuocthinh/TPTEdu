@@ -1,0 +1,49 @@
+extends ../../layouts/defaultLayout.pug 
+
+block main 
+    .container
+        .order__result.mt-5
+            h4.text-center=pageTitle
+            .row
+                if (result) 
+                    .col-12
+                        .alert.alert-danger.mt-4 Đặt hàng thành công (mã đơn hàng: #{result.id})
+                    .col-md-8.col-12
+                        .card.my-4
+                            .card-header.fw-bold Danh sách giỏ hàng
+                            .card-body            
+                                table.table.table-hover
+                                    thead
+                                        tr.text-center
+                                            th(scope='col') STT
+                                            th(scope='col') Tên khóa học 
+                                            th(scope='col') Số lượng 
+                                            th(scope='col') Giá
+                                            th(scope='col') Tổng tiền
+                                    
+                                    tbody
+                                        each item in result.courses 
+                                            tr.text-center.align-middle
+                                                td #{item.index}
+                                                td #{item.title}
+                                                td #{item.quantity}
+                                                td #{item.newPrice} $
+                                                td #{item.cost} $
+                                        tr.text-center.align-middle 
+                                            td(colspan=4).fw-bold Tổng đơn hàng 
+                                            td #{result.totalCost} $
+                    .col-md-4.col-12
+                        .card.my-4
+                            .card-header.fw-bold Thông tin người dùng 
+                            .card-body 
+                                p.p-0.m-0.d-flex.align-items-center.justify-content-between 
+                                    span.fw-bold Email 
+                                    span #{result.userInfo.email}
+                                p.p-0.m-0.d-flex.align-items-center.justify-content-between 
+                                    span.fw-bold Địa chỉ 
+                                    span #{result.userInfo.address}
+                                p.p-0.m-0.d-flex.align-items-center.justify-content-between 
+                                    span.fw-bold Số điện thoại  
+                                    span #{result.userInfo.phone}
+                    
+                    

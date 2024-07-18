@@ -1,0 +1,42 @@
+extends ../../layouts/defaultLayout.pug 
+include ../../mixins/alert.pug 
+
+block main 
+    .container 
+        h4.my-4 Tài khoản
+        .row 
+            .col-md-3.col-12
+                include ../../partials/profile-sider.pug
+            
+            .col-md-9.col-12
+                form(
+                    action="/users/login"
+                    method="post"
+                    id="form-update-profile"
+                    style="width: 80%;"
+                    class="mx-auto"
+                ) 
+                    h5(
+                        style="color: rgb(13,110,253);"
+                    ) #{pageTitle}
+                    .mb-1.row.form-group
+                        label.col-12.col-form-label.fw-bold(for='email') Email
+                        .col-12
+                            input(class="form-control" type='email' value=user.email name="email" id="email" placeholder="Nhập email")
+                    .mb-1.row.form-group
+                        label.col-12.col-form-label.fw-bold(for='fullName') Họ tên
+                        .col-12
+                            input(class="form-control" type='text' name="fullName" id="fullName" placeholder="Nhập họ tên")
+                    .mb-1.row.form-group
+                        label.col-12.col-form-label.fw-bold(for='address') Địa chỉ
+                        .col-12
+                            input(class="form-control" type='text' name="address" id="address" placeholder="Nhập địa chỉ")
+                    .mb-1.row.form-group
+                        label.col-12.col-form-label.fw-bold(for='phone') Số điện thoại 
+                        .col-12
+                            input(class="form-control" type='text' name="phone" id="phone" placeholder="Nhập số điện thoại")
+                    .row.mt-3.form-group.px-2 
+                        button.btn.btn-primary(type='submit' style="width: 200px;") Lưu thay đổi
+                    
+    
+                    

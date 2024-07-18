@@ -148,7 +148,7 @@ body {
     margin: 0;
 }
 
-.cart__item > .cart__info {
+.cart__item>.cart__info {
     flex-grow: 1;
     display: flex;
     justify-content: space-between;
@@ -302,6 +302,37 @@ body {
     border-bottom-right-radius: 10px;
 }
 
+/* validation */
+
+.invalid {
+    border: 1px solid red;
+}
+
+.valid {
+    border: 1px solid green;
+}
+
+.error-msg {
+    color: red;
+    font-size: 14px;
+}
+
+/* form login */
+#form-login,
+#form-register {
+    max-width: 400px;
+    width: 100%;
+    margin: 2rem auto;
+    min-height: 360px;
+}
+
+#form-login,
+#form-register {
+    max-width: 400px;
+    width: 100%;
+    margin: 2rem auto;
+}
+
 @media screen and (max-width: 567px) {
     #myMainCarousel.owl-carousel .carousel-image {
         height: 250px;
@@ -310,4 +341,56 @@ body {
     .detail__img {
         height: 250px;
     }
+}
+
+/* alert */
+/* alert */
+@keyframes slideInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(calc(100% + 32px));
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes fadeOut {
+    to {
+        opacity: 0;
+    }
+}
+
+.message.info {
+    position: absolute;
+    top: 100px;
+    right: 20px;
+    z-index: 40;
+    width: 400px;
+    transition: all linear 0.3s;
+    animation: slideInLeft ease .5s;
+}
+
+.alert-btn-close {
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    border-radius: 50%;
+}
+
+.profile__sider {
+    background: #000;
+    border-radius: 10px;
+}
+
+.profile__link {
+    display: block;
+    padding: .6rem 1.5rem;
+    color: #fff;
+}
+
+.profile__link:hover {
+    color: rgb(0, 120, 239);
 }

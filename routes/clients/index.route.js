@@ -6,16 +6,29 @@ const blogsRoutes = require("../../routes/clients/blogs.route");
 const blogsCategoriesRoutes = require("../../routes/clients/blogs-categories.route");
 const cartsRoutes = require("../../routes/clients/carts.route");
 const checkoutsRoutes = require("../../routes/clients/checkouts.route");
+const usersRoutes = require("../../routes/clients/users.route");
 // middlewares
 const cartsMiddleware = require("../../middlewares/clients/carts.middleware");
+const usersMiddleware = require("../../middlewares/clients/users.middleware");
 
 module.exports = (app) => {
-  app.use("/", cartsMiddleware, homeRoutes);
-  app.use("/courses", cartsMiddleware, coursesRoutes);
-  app.use("/courses-categories", cartsMiddleware, coursesCategoriesRoutes);
-  app.use("/search", cartsMiddleware, searchRoutes);
-  app.use("/blogs", cartsMiddleware, blogsRoutes);
-  app.use("/blogs-categories", cartsMiddleware, blogsCategoriesRoutes);
-  app.use("/carts", cartsMiddleware, cartsRoutes);
-  app.use("/checkout", cartsMiddleware, checkoutsRoutes);
+  app.use("/", cartsMiddleware, usersMiddleware, homeRoutes);
+  app.use("/courses", cartsMiddleware, usersMiddleware, coursesRoutes);
+  app.use(
+    "/courses-categories",
+    cartsMiddleware,
+    usersMiddleware,
+    coursesCategoriesRoutes
+  );
+  app.use("/search", cartsMiddleware, usersMiddleware, searchRoutes);
+  app.use("/blogs", cartsMiddleware, usersMiddleware, blogsRoutes);
+  app.use(
+    "/blogs-categories",
+    cartsMiddleware,
+    usersMiddleware,
+    blogsCategoriesRoutes
+  );
+  app.use("/carts", cartsMiddleware, usersMiddleware, cartsRoutes);
+  app.use("/checkout", cartsMiddleware, usersMiddleware, checkoutsRoutes);
+  app.use("/users", cartsMiddleware, usersMiddleware, usersRoutes);
 };
