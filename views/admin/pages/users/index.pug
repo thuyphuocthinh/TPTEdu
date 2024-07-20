@@ -47,7 +47,7 @@ block main
                                 each user in users 
                                     tr.text-center.align-middle 
                                         td 
-                                            input(type="checkbox" name="" checkbox-single=account.id class="form-check-input")  
+                                            input(type="checkbox" name="" checkbox-single=user.id class="form-check-input")  
                                         td #{user.index}
                                         td.fw-bold #{user.email}
                                         td #{user.fullName}

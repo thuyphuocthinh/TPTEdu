@@ -17,26 +17,42 @@ const dashboardRoutes = require("../../routes/admin/dashboard.route");
 const authMiddleware = require("../../middlewares/admin/authMiddleware");
 
 module.exports = (app) => {
-  app.use(`${prefixAdmin}/`, authMiddleware, dashboardRoutes);
-  app.use(`${prefixAdmin}/courses`, authMiddleware, coursesRoutes);
+  app.use(`${prefixAdmin}/dashboard`, authMiddleware.requireAuth, dashboardRoutes);
+  app.use(`${prefixAdmin}/courses`, authMiddleware.requireAuth, coursesRoutes);
   app.use(
     `${prefixAdmin}/courses-categories`,
-    authMiddleware,
+    authMiddleware.requireAuth,
     coursesCategoriesRoutes
   );
-  app.use(`${prefixAdmin}/blogs`, authMiddleware, blogsRoutes);
+  app.use(`${prefixAdmin}/blogs`, authMiddleware.requireAuth, blogsRoutes);
   app.use(
     `${prefixAdmin}/blogs-categories`,
-    authMiddleware,
+    authMiddleware.requireAuth,
     blogsCategoriesRoutes
   );
-  app.use(`${prefixAdmin}/accounts`, authMiddleware, accountsRoutes);
-  app.use(`${prefixAdmin}/roles`, authMiddleware, rolesRoutes);
-  app.use(`${prefixAdmin}/permissions`, authMiddleware, permissionsRoutes);
-  app.use(`${prefixAdmin}/general-settings`, authMiddleware, settingsRoutes);
-  app.use(`${prefixAdmin}/interfaces`, authMiddleware, interfacesRoutes);
-  app.use(`${prefixAdmin}/users`, authMiddleware, usersRoutes);
-  app.use(`${prefixAdmin}/orders`, authMiddleware, ordersRoutes);
+  app.use(
+    `${prefixAdmin}/accounts`,
+    authMiddleware.requireAuth,
+    accountsRoutes
+  );
+  app.use(`${prefixAdmin}/roles`, authMiddleware.requireAuth, rolesRoutes);
+  app.use(
+    `${prefixAdmin}/permissions`,
+    authMiddleware.requireAuth,
+    permissionsRoutes
+  );
+  app.use(
+    `${prefixAdmin}/general-settings`,
+    authMiddleware.requireAuth,
+    settingsRoutes
+  );
+  app.use(
+    `${prefixAdmin}/interfaces`,
+    authMiddleware.requireAuth,
+    interfacesRoutes
+  );
+  app.use(`${prefixAdmin}/users`, authMiddleware.requireAuth, usersRoutes);
+  app.use(`${prefixAdmin}/orders`, authMiddleware.requireAuth, ordersRoutes);
   app.use(`${prefixAdmin}/auth`, authRoutes);
   app.use(`${prefixAdmin}/errors`, errorRoutes);
 };

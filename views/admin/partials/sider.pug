@@ -4,10 +4,15 @@
             p.sider__title Core 
             
             .sider__block
-                a(href=`${prefixAdmin}/` class="sider__item")  
+                a(href=`${prefixAdmin}/dashboard` class="sider__item")  
                     span
                         .fa-solid.fa-gauge
                     span Dashboard 
+
+                a(href=`${prefixAdmin}/statistics` class="sider__item")  
+                    span
+                        .fa-solid.fa-gauge
+                    span Biểu đồ
 
     .sider__group 
         if(role.permissions.includes("courses-view"))

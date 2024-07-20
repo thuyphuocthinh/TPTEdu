@@ -7,6 +7,7 @@ const ForgotPassword = require("../../models/forgotPassword.model");
 const { newPrice } = require("../../helpers/price");
 const { generateRandomString } = require("../../helpers/generation");
 const { sendMail } = require("../../helpers/sendMail");
+const generator = require("../../helpers/generation");
 
 const getLogin = async (req, res) => {
   try {
@@ -76,6 +77,7 @@ const getRegister = async (req, res) => {
 const postRegister = async (req, res) => {
   try {
     req.body.password = md5(req.body.password);
+    req.body.tokenUser = generator.generateRandomString(30);
     const user = new Users(req.body);
     await user.save();
     res.cookie("tokenUser", user.tokenUser);
@@ -315,7 +317,6 @@ const patchResetPassword = async (req, res) => {
 
     req.flash("success", "Lấy lại mật khẩu thành công");
     res.redirect("/users/login");
-    
   } catch (error) {
     console.log(error);
   }

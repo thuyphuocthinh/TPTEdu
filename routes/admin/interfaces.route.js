@@ -29,4 +29,10 @@ router.get(
   controller.deleteCarousel
 );
 
+router.get(
+  "/carousels/delete/:id",
+  requestMiddleware.deleteReq("interfaces/carousels"),
+  controller.deleteCarousel
+);
+
 module.exports = router;

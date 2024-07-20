@@ -2,6 +2,7 @@ const { prefixAdmin } = require("../../config/system.config");
 const { pagination } = require("../../helpers/objectPagination");
 const Courses = require("../../models/courses.model");
 const CoursesCategories = require("../../models/courses_categories.model");
+const Accounts = require("../../models/accounts.model");
 const searchHelper = require("../../helpers/search");
 const { tree } = require("../../helpers/categoriesRecursion");
 
@@ -172,6 +173,15 @@ const postCreate = async (req, res) => {
     req.body.position = parseInt(req.body.position);
     req.body.price = parseInt(req.body.price);
     req.body.discountPercentage = parseInt(req.body.discountPercentage);
+    const account = await Accounts.findOne({
+      token: req.cookies.token,
+      deleted: false,
+      status: "active",
+    });
+    req.body.createdBy = {
+      user_id: account.id,
+      created_at: new Date(),
+    };
     const course = new Courses(req.body);
     await course.save();
     req.flash("success", "Tạo khóa học mới thành công!");
@@ -201,12 +211,22 @@ const getDetail = async (req, res) => {
 const deleteItem = async (req, res) => {
   try {
     const id = req.params.id;
+    const account = await Accounts.findOne({
+      token: req.cookies.token,
+      deleted: false,
+      status: "active",
+    });
+    const deletedBy = {
+      user_id: account.id,
+      deleted_at: new Date(),
+    };
     await Courses.updateOne(
       {
         _id: id,
       },
       {
         deleted: true,
+        $push: { deletedBy: deletedBy },
       }
     );
     req.flash("success", "Xóa thành công!");
@@ -245,12 +265,25 @@ const patchEdit = async (req, res) => {
     }
 
     const id = req.params.id;
+    const account = await Accounts.findOne({
+      token: req.cookies.token,
+      deleted: false,
+      status: "active",
+    });
+
+    const updatedBy = {
+      user_id: account.id,
+      updated_at: new Date(),
+    };
 
     await Courses.updateOne(
       {
         _id: id,
       },
-      req.body
+      {
+        ...req.body,
+        $push: { updatedBy: updatedBy },
+      }
     );
     req.flash("success", "Cập nhật thành công!");
     res.redirect(`${prefixAdmin}/courses`);
@@ -265,12 +298,23 @@ const updateStatus = async (req, res) => {
     const status = req.params.status;
 
     if (id && status) {
+      const account = await Accounts.findOne({
+        token: req.cookies.token,
+        deleted: false,
+        status: "active",
+      });
+
+      const updatedBy = {
+        user_id: account.id,
+        updated_at: new Date(),
+      };
       await Courses.updateOne(
         {
           _id: id,
         },
         {
           status: status,
+          $push: { updatedBy: updatedBy },
         }
       );
     }
@@ -285,6 +329,16 @@ const changeMulti = async (req, res) => {
   try {
     const changeType = req.body.changeMulti;
     const ids = req.body.ids.split(",");
+    const account = await Accounts.findOne({
+      token: req.cookies.token,
+      deleted: false,
+      status: "active",
+    });
+
+    const updatedBy = {
+      user_id: account.id,
+      updated_at: new Date(),
+    };
 
     switch (changeType) {
       case "deleteAll": {
@@ -295,6 +349,7 @@ const changeMulti = async (req, res) => {
             },
             {
               deleted: true,
+              $push: { updatedBy: updatedBy },
             }
           );
         });
@@ -310,6 +365,7 @@ const changeMulti = async (req, res) => {
             },
             {
               status: statusChange,
+              $push: { updatedBy: updatedBy },
             }
           );
         });

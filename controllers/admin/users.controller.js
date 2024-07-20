@@ -33,7 +33,7 @@ const index = async (req, res) => {
       objSearch = searchHelper.search(req);
       find = {
         ...find,
-        title: objSearch.regex,
+        fullName: objSearch.regex,
       };
     }
 
@@ -66,7 +66,7 @@ const index = async (req, res) => {
 
     // pagination
     let objectPagination = {
-      limitItem: 4,
+      limitItem: 10,
       totalPages: 0,
       currentPage: page || 1,
       skip: 0,
@@ -122,26 +122,12 @@ const changeMulti = async (req, res) => {
   try {
     const changeType = req.body.changeMulti;
     const ids = req.body.ids.split(",");
-
     switch (changeType) {
-      case "deleteAll": {
-        ids.forEach(async (id) => {
-          await Users.updateOne(
-            {
-              _id: id,
-            },
-            {
-              deleted: true,
-            }
-          );
-        });
-        break;
-      }
       case "changeStatus": {
         ids.forEach(async (id) => {
           const item = await Users.findOne({ _id: id, deleted: false });
           const statusChange = item.status === "active" ? "inactive" : "active";
-          await Accounts.updateOne(
+          await Users.updateOne(
             {
               _id: id,
             },

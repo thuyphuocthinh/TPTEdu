@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-const generator = require("../helpers/generation");
 
 const usersSchema = new mongoose.Schema(
   {
@@ -10,10 +9,7 @@ const usersSchema = new mongoose.Schema(
     address: String,
     orders: [{ order_id: String }],
     purchased_courses: [{ course_id: String }],
-    tokenUser: {
-      type: String,
-      default: generator.generateRandomString(30),
-    },
+    tokenUser: String,
     status: {
       type: String,
       default: "active",

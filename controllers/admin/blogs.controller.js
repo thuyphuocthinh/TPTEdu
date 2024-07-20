@@ -3,6 +3,7 @@ const searchHelper = require("../../helpers/search");
 const { tree } = require("../../helpers/categoriesRecursion");
 const Blogs = require("../../models/blogs.model");
 const BlogsCategories = require("../../models/blogs-categories.model");
+const Accounts = require("../../models/accounts.model");
 const { prefixAdmin } = require("../../config/system.config");
 
 const index = async (req, res) => {
@@ -143,6 +144,15 @@ const getCreate = async (req, res) => {
 const postCreate = async (req, res) => {
   try {
     req.body.position = parseInt(req.body.position);
+    const account = await Accounts.findOne({
+      token: req.cookies.token,
+      deleted: false,
+      status: "active",
+    });
+    req.body.createdBy = {
+      user_id: account.id,
+      created_at: new Date(),
+    };
     const blog = new Blogs(req.body);
     await blog.save();
     req.flash("success", "Thêm bài viết mới thành công");
@@ -194,8 +204,22 @@ const patchEdit = async (req, res) => {
       delete req.body.thumbnail;
     }
     req.body.position = parseInt(req.body.position);
-
-    await Blogs.updateOne({ _id: id }, req.body);
+    const account = await Accounts.findOne({
+      token: req.cookies.token,
+      deleted: false,
+      status: "active",
+    });
+    const updatedBy = {
+      user_id: account.id,
+      updated_at: new Date(),
+    };
+    await Blogs.updateOne(
+      { _id: id },
+      {
+        ...req.body,
+        $push: { updatedBy: updatedBy },
+      }
+    );
     req.flash("success", "Cập nhật bài viết thành công");
     res.redirect(`${prefixAdmin}/blogs`);
   } catch (error) {
@@ -207,7 +231,19 @@ const patchEdit = async (req, res) => {
 const deleteItem = async (req, res) => {
   try {
     const id = req.params.id;
-    await Blogs.updateOne({ _id: id }, { deleted: true });
+    const account = await Accounts.findOne({
+      token: req.cookies.token,
+      deleted: false,
+      status: "active",
+    });
+    const deletedBy = {
+      user_id: account.id,
+      deleted_at: new Date(),
+    };
+    await Blogs.updateOne(
+      { _id: id },
+      { deleted: true, $push: { deletedBy: deletedBy } }
+    );
     req.flash("success", "Xóa bài viết thành công");
     res.redirect(`${prefixAdmin}/blogs`);
   } catch (error) {
@@ -219,12 +255,22 @@ const deleteItem = async (req, res) => {
 const updateStatus = async (req, res) => {
   const id = req.params.id;
   const status = req.params.status;
+  const account = await Accounts.findOne({
+    token: req.cookies.token,
+    deleted: false,
+    status: "active",
+  });
+  const updatedBy = {
+    user_id: account.id,
+    updated_at: new Date(),
+  };
   await Blogs.updateOne(
     {
       _id: id,
     },
     {
       status: status,
+      $push: { updatedBy: updatedBy },
     }
   );
   req.flash("success", "Cập nhật trạng thái bài viết thành công");
@@ -240,7 +286,15 @@ const changeMulti = async (req, res) => {
   try {
     const changeType = req.body.changeMulti;
     const ids = req.body.ids.split(",");
-
+    const account = await Accounts.findOne({
+      token: req.cookies.token,
+      deleted: false,
+      status: "active",
+    });
+    const updatedBy = {
+      user_id: account.id,
+      updated_at: new Date(),
+    };
     switch (changeType) {
       case "deleteAll": {
         ids.forEach(async (id) => {
@@ -250,6 +304,7 @@ const changeMulti = async (req, res) => {
             },
             {
               deleted: true,
+              $push: { updatedBy: updatedBy },
             }
           );
         });
@@ -265,6 +320,7 @@ const changeMulti = async (req, res) => {
             },
             {
               status: statusChange,
+              $push: { updatedBy: updatedBy },
             }
           );
         });

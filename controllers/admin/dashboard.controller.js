@@ -43,6 +43,7 @@ const index = async (req, res) => {
         total: 0,
         pending: 0,
         approved: 0,
+        totalCost: 0,
       },
     };
 
@@ -59,10 +60,12 @@ const index = async (req, res) => {
     statistic.coursesCategories.total = await CoursesCategories.countDocuments({
       deleted: false,
     });
-    statistic.coursesCategories.active = await CoursesCategories.countDocuments({
-      deleted: false,
-      status: "active",
-    });
+    statistic.coursesCategories.active = await CoursesCategories.countDocuments(
+      {
+        deleted: false,
+        status: "active",
+      }
+    );
     statistic.coursesCategories.inactive =
       await CoursesCategories.countDocuments({
         deleted: false,
@@ -113,20 +116,30 @@ const index = async (req, res) => {
       status: "inactive",
     });
 
-    statistic.orders.total = await Users.countDocuments();
-    statistic.orders.pending = await Users.countDocuments({
+    statistic.orders.total = await Orders.countDocuments();
+    statistic.orders.pending = await Orders.countDocuments({
       status: "Pending",
     });
-    statistic.orders.approved = await Users.countDocuments({
+    statistic.orders.approved = await Orders.countDocuments({
       deleted: false,
       status: "Approved",
     });
+
+    const orders = await Orders.find({ status: "Approved" });
+    let totalCost = 0;
+    for (const order of orders) {
+      for (const course of order.courses) {
+        totalCost +=
+          course.quantity *
+          (course.price - (course.price * course.discountPercentage) / 100);
+      }
+    }
+    statistic.orders.totalCost = totalCost.toLocaleString();
 
     res.render("admin/pages/dashboard/index", {
       pageTitle: "Dashboard",
       statistic,
     });
-
   } catch (error) {
     console.log(error);
   }

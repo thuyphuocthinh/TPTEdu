@@ -3,22 +3,26 @@ const Accounts = require("../../models/accounts.model");
 const { prefixAdmin } = require("../../config/system.config");
 
 const getLogin = async (req, res) => {
-  if (req.cookies.token) {
-    const account = await Accounts.findOne({
-      token: req.cookies.token,
-      deleted: false,
-    });
-    if (account) {
-      res.redirect(`${prefixAdmin}/courses`);
+  try {
+    if (req.cookies.token) {
+      const account = await Accounts.findOne({
+        token: req.cookies.token,
+        deleted: false,
+      });
+      if (account) {
+        res.redirect(`${prefixAdmin}/dashboard`);
+      } else {
+        res.render("admin/pages/auth/login", {
+          pageTitle: "Trang đăng nhập",
+        });
+      }
     } else {
       res.render("admin/pages/auth/login", {
         pageTitle: "Trang đăng nhập",
       });
     }
-  } else {
-    res.render("admin/pages/auth/login", {
-      pageTitle: "Trang đăng nhập",
-    });
+  } catch (error) {
+    console.log(error);
   }
 };
 
@@ -54,7 +58,7 @@ const postLogin = async (req, res) => {
 
     req.flash("success", "Đăng nhập thành công");
     res.cookie("token", account.token);
-    res.redirect(`${prefixAdmin}/courses`);
+    res.redirect(`${prefixAdmin}/dashboard`);
   } catch (error) {
     req.flash("error", "Đăng nhập không thành công");
     console.log(error);

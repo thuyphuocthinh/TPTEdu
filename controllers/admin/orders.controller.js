@@ -57,7 +57,7 @@ const index = async (req, res) => {
 
     // pagination
     let objectPagination = {
-      limitItem: 4,
+      limitItem: 10,
       totalPages: 0,
       currentPage: page || 1,
       skip: 0,

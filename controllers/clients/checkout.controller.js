@@ -61,8 +61,6 @@ const order = async (req, res) => {
         courses: [],
       }
     );
-    
-    res.clearCookie("cartId");
 
     let totalCost = 0;
     const result = await Orders.findOne({ _id: newOrder.id });
@@ -79,6 +77,8 @@ const order = async (req, res) => {
       totalCost += item.cost;
     }
     result.totalCost = totalCost;
+
+    res.clearCookie("cartId");
 
     res.render("clients/pages/checkout/result", {
       pageTitle: "Đặt hàng thành công",

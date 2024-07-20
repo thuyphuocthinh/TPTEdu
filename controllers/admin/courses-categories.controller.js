@@ -1,5 +1,6 @@
 const { prefixAdmin } = require("../../config/system.config");
 const CoursesCategories = require("../../models/courses_categories.model");
+const Accounts = require("../../models/accounts.model");
 const { pagination } = require("../../helpers/objectPagination");
 const searchHelper = require("../../helpers/search");
 const { tree } = require("../../helpers/categoriesRecursion");
@@ -142,6 +143,15 @@ const getCreate = async (req, res) => {
 const postCreate = async (req, res) => {
   try {
     req.body.position = parseInt(req.body.position);
+    const account = await Accounts.findOne({
+      token: req.cookies.token,
+      deleted: false,
+      status: "active",
+    });
+    req.body.createdBy = {
+      user_id: account.id,
+      created_at: new Date(),
+    };
     const category = new CoursesCategories(req.body);
     await category.save();
     req.flash("success", "Thêm danh mục khóa học mới thành công");
@@ -176,11 +186,23 @@ const patchEdit = async (req, res) => {
   try {
     const id = req.params.id;
     req.body.position = parseInt(req.body.position);
+    const account = await Accounts.findOne({
+      token: req.cookies.token,
+      deleted: false,
+      status: "active",
+    });
+    const updatedBy = {
+      user_id: account.id,
+      updated_at: new Date(),
+    };
     await CoursesCategories.updateOne(
       {
         _id: id,
       },
-      req.body
+      {
+        ...req.body,
+        $push: { updatedBy: updatedBy },
+      }
     );
     req.flash("success", "Cập nhật thành công");
     res.redirect(`${prefixAdmin}/courses-categories`);
@@ -193,12 +215,22 @@ const updateStatus = async (req, res) => {
   try {
     const id = req.params.id;
     const status = req.params.status;
+    const account = await Accounts.findOne({
+      token: req.cookies.token,
+      deleted: false,
+      status: "active",
+    });
+    const updatedBy = {
+      user_id: account.id,
+      updated_at: new Date(),
+    };
     await CoursesCategories.updateOne(
       {
         _id: id,
       },
       {
         status: status,
+        $push: { updatedBy: updatedBy },
       }
     );
     req.flash("success", "Cập nhật trạng thái thành công");
@@ -212,7 +244,15 @@ const changeMulti = async (req, res) => {
   try {
     const changeType = req.body.changeMulti;
     const ids = req.body.ids.split(",");
-
+    const account = await Accounts.findOne({
+      token: req.cookies.token,
+      deleted: false,
+      status: "active",
+    });
+    const updatedBy = {
+      user_id: account.id,
+      updated_at: new Date(),
+    };
     switch (changeType) {
       case "deleteAll": {
         ids.forEach(async (id) => {
@@ -222,6 +262,7 @@ const changeMulti = async (req, res) => {
             },
             {
               deleted: true,
+              $push: { updatedBy: updatedBy },
             }
           );
         });
@@ -240,6 +281,7 @@ const changeMulti = async (req, res) => {
             },
             {
               status: statusChange,
+              $push: { updatedBy: updatedBy },
             }
           );
         });
@@ -259,12 +301,22 @@ const changeMulti = async (req, res) => {
 const deleteItem = async (req, res) => {
   try {
     const id = req.params.id;
+    const account = await Accounts.findOne({
+      token: req.cookies.token,
+      deleted: false,
+      status: "active",
+    });
+    const deletedBy = {
+      user_id: account.id,
+      deleted_at: new Date(),
+    };
     await CoursesCategories.updateOne(
       {
         _id: id,
       },
       {
         deleted: true,
+        $push: { deletedBy: deletedBy },
       }
     );
     req.flash("success", "Xóa danh mục khóa học thành công");

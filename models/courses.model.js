@@ -11,7 +11,7 @@ const coursesSchema = new mongoose.Schema(
     discountPercentage: Number,
     thumbnail: String,
     description: String,
-    status: String, 
+    status: String,
     position: Number,
     deleted: {
       type: Boolean,
@@ -25,10 +25,12 @@ const coursesSchema = new mongoose.Schema(
       user_id: String,
       created_at: Date,
     },
-    updatedBy: {
-      user_id: String,
-      updated_at: Date,
-    },
+    updatedBy: [
+      {
+        user_id: String,
+        updated_at: Date,
+      },
+    ],
     deletedBy: {
       user_id: String,
       updated_at: Date,

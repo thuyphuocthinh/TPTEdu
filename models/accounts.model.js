@@ -1,6 +1,5 @@
 const mongoose = require("mongoose");
 const slug = require("mongoose-slug-updater");
-const generator = require("../helpers/generation");
 mongoose.plugin(slug);
 
 const accountsSchema = new mongoose.Schema(
@@ -8,10 +7,7 @@ const accountsSchema = new mongoose.Schema(
     email: String,
     password: String,
     role_id: String,
-    token: {
-      type: String,
-      default: generator.generateRandomString(30),
-    },
+    token: String,
     status: String,
     slug: {
       type: String,

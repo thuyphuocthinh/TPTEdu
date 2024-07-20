@@ -31,7 +31,8 @@ app.use(flash());
 app.use(methodOverride("_method"));
 
 // body-parser
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({ extended: false }));
+
 // TinyMCE
 app.use(
   "/tinymce",
@@ -48,8 +49,6 @@ app.get("*", (req, res) => {
 // view engine
 app.set("views", `${__dirname}/views`);
 app.set("view engine", "pug");
-
-
 
 const port = process.env.PORT || 5000;
 app.listen(port, () => {

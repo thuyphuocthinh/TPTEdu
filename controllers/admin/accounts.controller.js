@@ -1,5 +1,6 @@
 const { pagination } = require("../../helpers/objectPagination");
 const searchHelper = require("../../helpers/search");
+const generator = require("../../helpers/generation");
 const { prefixAdmin } = require("../../config/system.config");
 const Accounts = require("../../models/accounts.model");
 const Roles = require("../../models/roles.model");
@@ -128,6 +129,8 @@ const postCreate = async (req, res) => {
       email: req.body.email,
       deleted: false,
     });
+
+    req.body.token = generator.generateRandomString(30);
 
     if (!emailExist) {
       req.body.password = md5(req.body.password);

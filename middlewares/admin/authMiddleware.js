@@ -2,7 +2,7 @@ const Accounts = require("../../models/accounts.model");
 const { prefixAdmin } = require("../../config/system.config");
 const Roles = require("../../models/roles.model");
 
-module.exports = async (req, res, next) => {
+module.exports.requireAuth = async (req, res, next) => {
   try {
     if (!req.cookies.token) {
       res.redirect(`${prefixAdmin}/auth/login`);

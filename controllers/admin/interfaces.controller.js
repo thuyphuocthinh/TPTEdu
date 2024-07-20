@@ -41,7 +41,7 @@ const postCreateCarousels = async (req, res) => {
 const deleteCarousel = async (req, res) => {
   try {
     const id = req.params.id;
-    Carousels.updateOne(
+    await Carousels.updateOne(
       {
         _id: id,
       },
