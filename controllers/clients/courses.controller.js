@@ -176,39 +176,42 @@ const search = async (req, res) => {
     }
 
     // search
+    let result = [];
     let objSearch;
+    let objectPagination;
+    
     if (req.query.keyword) {
       objSearch = searchHelper.search(req);
       find = {
         ...find,
         title: objSearch.regex,
       };
+      // pagination
+      objectPagination = {
+        limitItem: 4,
+        totalPages: 0,
+        currentPage: page || 1,
+        skip: 0,
+      };
+      const totalItems = await Courses.countDocuments(find);
+      objectPagination = pagination(objectPagination, totalItems);
+
+      let courses = await Courses.find(find)
+        .limit(objectPagination.limitItem)
+        .skip(objectPagination.skip)
+        .sort({ position: "desc" });
+
+      courses.forEach((course, index) => {
+        course.index = index + 1;
+      });
+
+      courses = newPrices(courses);
+      result = courses;
     }
-
-    // pagination
-    let objectPagination = {
-      limitItem: 4,
-      totalPages: 0,
-      currentPage: page || 1,
-      skip: 0,
-    };
-    const totalItems = await Courses.countDocuments(find);
-    objectPagination = pagination(objectPagination, totalItems);
-
-    let courses = await Courses.find(find)
-      .limit(objectPagination.limitItem)
-      .skip(objectPagination.skip)
-      .sort({ position: "desc" });
-
-    courses.forEach((course, index) => {
-      course.index = index + 1;
-    });
-
-    courses = newPrices(courses);
 
     res.render("clients/pages/search/index", {
       pageTitle: "Kết quả tìm kiếm",
-      courses,
+      courses: result,
       pagination: objectPagination,
       keyword: objSearch?.keyword || "",
       settings,

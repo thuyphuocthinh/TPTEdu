@@ -62,7 +62,7 @@ body {
     position: absolute;
     top: 30px;
     min-width: 200px;
-    width: 400px;
+    width: 200px;
     right: 0;
 }
 
@@ -75,7 +75,7 @@ body {
 .header__list li a {
     color: #000;
     display: block;
-    padding: 5px 10px;
+    padding: 10px 10px;
 }
 
 .header__list li a:hover {

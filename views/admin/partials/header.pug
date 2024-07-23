@@ -1,18 +1,15 @@
 .header 
     a(href=`${prefixAdmin}/` class="header__logo") TPT-edu
     .header__right 
-        .header__search
-            form.d-flex(role='search')
-                input.form-control.me-2(type='search' placeholder='Search' aria-label='Search')
-                button.btn.btn-success(type='submit') Search
+        if(account) 
+            a(href=`${prefixAdmin}/accounts`) #{account.email} - #{role.title}  
+
         .header__user 
             span.header__buttons 
                 i.fa-solid.fa-user
                 i.ms-2.fa-solid.fa-caret-down
             .header__dropdown.hidden 
-                ul.header__list 
-                    li 
-                        a(href=`${prefixAdmin}/accounts`) #{account.email} - #{role.title}  
+                ul.header__list  
                     li 
                         a(href=`${prefixAdmin}/auth/logout`) Đăng xuất
 
