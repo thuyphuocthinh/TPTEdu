@@ -1,0 +1,36 @@
+extends ../../layouts/defaultLayout.pug
+include ../../mixins/box-head.pug
+include ../../mixins/alert.pug
+
+block main 
+    .main 
+        +alertSuccess("3000")
+        +box-head(pageTitle)
+
+        .row.mt-4.my-3 
+            .col-12 
+                .card
+                    .card-header.fw-bold Doanh thu 
+                    .card-body 
+                        div
+                            canvas#revenue 
+        .row.my-3 
+            .col-6
+                .card
+                    .card-header.fw-bold Người dùng 
+                    .card-body 
+                        div
+                            canvas#users
+
+            .col-6
+                .card
+                    .card-header.fw-bold Khóa học bán chạy 
+                    .card-body 
+                        div
+                            canvas#courses
+
+          
+
+
+    script(type="application/javascript" src="/chart/dist/chart.umd.js")
+    script(type="application/javascript" src="/public/admin/js/chart.js")

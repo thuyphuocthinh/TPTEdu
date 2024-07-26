@@ -13,11 +13,16 @@ const interfacesRoutes = require("../../routes/admin/interfaces.route");
 const usersRoutes = require("../../routes/admin/users.route");
 const ordersRoutes = require("../../routes/admin/orders.route");
 const dashboardRoutes = require("../../routes/admin/dashboard.route");
+const statisticsRoutes = require("../../routes/admin/statistics.route");
 // middlewares
 const authMiddleware = require("../../middlewares/admin/authMiddleware");
 
 module.exports = (app) => {
-  app.use(`${prefixAdmin}/dashboard`, authMiddleware.requireAuth, dashboardRoutes);
+  app.use(
+    `${prefixAdmin}/dashboard`,
+    authMiddleware.requireAuth,
+    dashboardRoutes
+  );
   app.use(`${prefixAdmin}/courses`, authMiddleware.requireAuth, coursesRoutes);
   app.use(
     `${prefixAdmin}/courses-categories`,
@@ -53,6 +58,11 @@ module.exports = (app) => {
   );
   app.use(`${prefixAdmin}/users`, authMiddleware.requireAuth, usersRoutes);
   app.use(`${prefixAdmin}/orders`, authMiddleware.requireAuth, ordersRoutes);
+  app.use(
+    `${prefixAdmin}/statistics`,
+    authMiddleware.requireAuth,
+    statisticsRoutes
+  );
   app.use(`${prefixAdmin}/auth`, authRoutes);
   app.use(`${prefixAdmin}/errors`, errorRoutes);
 };

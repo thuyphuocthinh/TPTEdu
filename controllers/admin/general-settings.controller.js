@@ -20,7 +20,7 @@ const patchEdit = async (req, res) => {
     const settings = new GeneralSettings(req.body);
     await settings.save();
     req.flash("success", "Cập nhật thành công");
-    res.redirect(`${prefixAdmin}/general-settings`);
+    res.redirect(`${prefixAdmin}/general-settings/edit`);
   } catch (error) {
     req.flash("error", "Cập nhật thất bại");
     console.log(error);

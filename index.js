@@ -39,6 +39,12 @@ app.use(
   express.static(path.join(__dirname, "node_modules", "tinymce"))
 );
 
+// Chart.js
+app.use(
+  "/chart",
+  express.static(path.join(__dirname, "node_modules", "chartjs"))
+);
+
 // routes
 adminRoute(app);
 clientsRoute(app);
